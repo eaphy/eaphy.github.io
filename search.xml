@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Hexo 实用插件]]></title>
+    <url>%2F2019%2F06%2F29%2FHexo-%E5%AE%9E%E7%94%A8%E6%8F%92%E4%BB%B6%2F</url>
+    <content type="text"><![CDATA[搜索插件进入博客根目录，从cmd输入以下命令 1npm install hexo-generator-searchdb --save 修改 站点配置 文件，注意 search.xml 的路径 12345search: path: search.xml field: post format: html limit: 10000 修改 主题配置 文件，搜索 local_search 12local_search: enable: true GIT 插件进入博客根目录，从cmd输入以下命令 1npm install hexo-deployer-git --save 修改 站点配置 文件 1234deploy: type: git repo: https://github.com/eaphy/eaphy.github.io.git branch: master 加密插件进入博客根目录，从cmd输入以下命令 1npm install --save hexo-blog-encrypt 修改 站点配置 文件 123# Securityencrypt: enable: true 在文章头部加入： 12345678910---title: 测试密码tags:categories:top: 1date: 2019-06-29 16:54:51password: 123456abstract: 加密文章，点击 阅读全文，输入密码之后访问全文 ！message: 请输入密码，回车查看文章内容 ！---]]></content>
+      <categories>
+        <category>网站运维</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Java 线程池解析]]></title>
+    <url>%2F2019%2F06%2F28%2F%E7%BA%BF%E7%A8%8B%E6%B1%A0%E8%A7%A3%E6%9E%90%2F</url>
+    <content type="text"><![CDATA[线程池作用 利用线程池管理并复用线程、控制最大并发数等 实现任务线程队列缓存策略和拒绝机制 实现某些与时间相关的功能，如定时执行、周期执行等 隔离线程环境，比如，交易服务和搜索服务在同一台服务器上,分别开启两个线程池,交易线程的资源消耗明显要大;因此,通过配置独立的线程池,将较慢的交易服务与搜索服务隔离开,避免各服务线程相互影响. 线程池好处 降低资源消耗： 通过重复利用已创建的线程,降低创建和销毁线程造成的系统资源消耗 提高响应速度： 当任务到达时,任务可以不需要等到线程创建就能立即执行 提高线程的可管理性： 线程是稀缺资源,如果过多地创建,不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一分配、调优和监控。 线程池构造解析123456789101112131415161718192021public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue&lt;Runnable&gt; workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler) &#123; if (corePoolSize &lt; 0 || maximumPoolSize &lt;= 0 || maximumPoolSize &lt; corePoolSize || keepAliveTime &lt; 0) throw new IllegalArgumentException(); if (workQueue == null || threadFactory == null || handler == null) throw new NullPointerException(); this.corePoolSize = corePoolSize; this.maximumPoolSize = maximumPoolSize; this.workQueue = workQueue; this.keepAliveTime = unit.toNanos(keepAliveTime); this.threadFactory = threadFactory; this.handler = handler;&#125; 七个参数解析： 1. corePoolSize线程池中的常驻核心线程数，一般不会被回收。如果 executor.allowCoreThreadTimeOut(true) ，那么核心线程如果不干活(闲置状态)的话，超过一定时间( keepAliveTime)，就会被销毁掉 2. maximumPoolSize线程池能容纳同时执行的最大线程数，线程总数计算公式 = 核心线程数 + 非核心线程数。 3. keepAliveTime 非核心空闲线程的存活时间。 4. TimeUnit keepAliveTime 的时间单位。 5. workQueue 任务队列，存放被提交但尚未执行的任务。 6. threadFactory生成线程池中工作线程的线程工厂。 7. handler 拒绝策略。 hreadPoolExecutor.AbortPolicy:丢弃任务并抛出RejectedExecutionException异常。 ThreadPoolExecutor.DiscardPolicy：丢弃任务，但是不抛出异常。 ThreadPoolExecutor.DiscardOldestPolicy：丢弃队列等待最久的任务，然后重新尝试执行任务（重复此过程） ThreadPoolExecutor.CallerRunsPolicy：由调用线程处理该任务 JDK 自带的线程池123456// 单线程Executor executor1 = Executors.newSingleThreadExecutor();// 固定长度Executor executor2 = Executors.newFixedThreadPool(5);// 可扩展，随需创建线程数Executor executor3 = Executors.newCachedThreadPool(); 一般不用直接使用以上三种，而是手写 ThreadPoolExecutor 实现线程池，因为阻塞队列的最大值为 Integer.MAX_VALUE ，会造成OOM。 合理配置线程池1. cpu 密集型：(需要大量运算，不会阻塞，宜少配置线程数) cpu核心数+1 2. IO 密集型：（需要大量IO，会阻塞，宜多配置线程数） cpu核心数*2]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>线程池</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 原理解析]]></title>
+    <url>%2F2019%2F06%2F28%2Fzookeeper-%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%2F</url>
+    <content type="text"><![CDATA[zookeeper 是什么 ? ZooKeeper 是一个开源的分布式协调服务，是 Apache 顶级项目 Hadoop 中非常重要的组件。 zookeeper 能做什么 ? 统一配置、分布式锁、集群管理、注册中心、分布式队列 zookeeper 原理 数据模型 ZooKeeper 数据模型的结构与Unix文件系统很类似，每个节点称作一个ZNode，ZNode 是以 key-value 形式存在的。 重要概念]]></content>
+      <categories>
+        <category>开源框架</category>
+      </categories>
+      <tags>
+        <tag>zookeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hexo+Github+Next 搭建个人博客]]></title>
+    <url>%2F2019%2F06%2F26%2FHexo-Github-Next-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2F</url>
+    <content type="text"><![CDATA[1. 在 github 建立 repository2. 安装 node.js 和 git3. 安装 hexo 从G盘输入cmd，回车，输入以下命令 1234npm install hexo-cli -ghexo init Eaphy's-Blog //文件夹名字cd Eaphy's-Blognpm install 4. 安装 Next 12cd Eaphy&apos;s-Bloggit clone https://github.com/iissnan/hexo-theme-next themes/next 5. 配置博客 编辑站点中 _config.yml ,启用 next 主题，切换中文语言 1theme: next 1language: zh-CN 编辑主题中 _config.yml ,选择 Pisces Scheme 123#scheme: Muse#scheme: Mistscheme: Pisces 6.拉取仓库代码到本地 1234567891011121314151617# 拉取代码cd Eaphy's-Bloggit clone https://github.com/eaphy/eaphy.github.io.git ./publichexo g# 提交代码cd public git add .git commit -m "first commit"git push]]></content>
+      <categories>
+        <category>网站运维</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>github</tag>
+        <tag>next</tag>
+      </tags>
+  </entry>
+</search>
