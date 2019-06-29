@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="uptime精简版显示系统负载均衡。load average: 0.00, 0.09, 0.10， 分别代表1分钟、5分钟、15分钟的负载均衡。 12[root@localhost ~]# uptime 13:54:10 up 9 min,  2 users,  load average: 0.00, 0.09, 0.10">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 常见命令">
+<meta property="og:url" content="http://yoursite.com/2019/06/28/Linux-常见命令/index.html">
+<meta property="og:site_name" content="Eaphy&#39;s Blog">
+<meta property="og:description" content="uptime精简版显示系统负载均衡。load average: 0.00, 0.09, 0.10， 分别代表1分钟、5分钟、15分钟的负载均衡。 12[root@localhost ~]# uptime 13:54:10 up 9 min,  2 users,  load average: 0.00, 0.09, 0.10">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-29T11:01:53.526Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 常见命令">
+<meta name="twitter:description" content="uptime精简版显示系统负载均衡。load average: 0.00, 0.09, 0.10， 分别代表1分钟、5分钟、15分钟的负载均衡。 12[root@localhost ~]# uptime 13:54:10 up 9 min,  2 users,  load average: 0.00, 0.09, 0.10">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/06/28/Linux-常见命令/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux 常见命令 | Eaphy's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eaphy's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">业精于勤荒于嬉，行成于思毁于随</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/Linux-常见命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EAPHY">
+      <meta itemprop="description" content="专注于技术，厚积而薄发 !">
+      <meta itemprop="image" content="/images/touxiang.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eaphy's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux 常见命令
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-28 01:20:27" itemprop="dateCreated datePublished" datetime="2019-06-28T01:20:27+08:00">2019-06-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-29 19:01:53" itemprop="dateModified" datetime="2019-06-29T19:01:53+08:00">2019-06-29</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="uptime"><a href="#uptime" class="headerlink" title="uptime"></a><strong>uptime</strong></h1><p>精简版显示系统负载均衡。<code>load average: 0.00, 0.09, 0.10</code>， 分别代表1分钟、5分钟、15分钟的负载均衡。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># uptime</span></span><br><span class="line"> 13:54:10 up 9 min,  2 users,  load average: 0.00, 0.09, 0.10</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+
+<h1 id="top"><a href="#top" class="headerlink" title="top"></a><strong>top</strong></h1><p>查看整机系统性能。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># top</span></span><br><span class="line">top - 13:54:04 up 9 min,  2 users,  load average: 0.00, 0.09, 0.10</span><br><span class="line">Tasks: 448 total,   2 running, 446 sleeping,   0 stopped,   0 zombie</span><br><span class="line">%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  3866948 total,  2971808 free,   483016 used,   412124 buff/cache</span><br><span class="line">KiB Swap:  2097148 total,  2097148 free,        0 used.  3144672 avail Mem </span><br><span class="line"></span><br><span class="line">   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                    </span><br><span class="line">  2500 mysql     20   0 1182556 188432  10056 S   0.6  4.9   0:01.52 mysqld                                     </span><br><span class="line">     1 root      20   0  189244   4232   2408 S   0.0  0.1   0:02.52 systemd                                    </span><br><span class="line">     2 root      20   0       0      0      0 S   0.0  0.0   0:00.03 kthreadd                                   </span><br><span class="line">     3 root      20   0       0      0      0 S   0.0  0.0   0:00.01 ksoftirqd/0                                </span><br><span class="line">     5 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H                               </span><br><span class="line">     6 root      20   0       0      0      0 S   0.0  0.0   0:00.05 kworker/u256:0                             </span><br><span class="line">     7 root      rt   0       0      0      0 S   0.0  0.0   0:00.07 migration/0                                </span><br><span class="line">     8 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcu_bh                                     </span><br><span class="line">     9 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/0                                    </span><br><span class="line">    10 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/1                                    </span><br><span class="line">    11 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/2                                    </span><br><span class="line">    12 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/3                                    </span><br><span class="line">    13 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/4                                    </span><br><span class="line">    14 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/5                                    </span><br><span class="line">    15 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/6                                    </span><br><span class="line">    16 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/7                                    </span><br><span class="line">    17 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/8</span><br></pre></td></tr></table></figure>
+
+<p>输入top 回车后，按数字 1 键可以显示多核cpu各核的使用情况。按字母 q 键退出 top</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">top - 13:57:30 up 12 min,  2 users,  load average: 0.00, 0.04, 0.08</span><br><span class="line">Tasks: 448 total,   2 running, 446 sleeping,   0 stopped,   0 zombie</span><br><span class="line">%Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu1  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu2  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu3  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu4  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu5  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu6  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu7  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  3866948 total,  2972008 free,   482760 used,   412180 buff/cache</span><br><span class="line">KiB Swap:  2097148 total,  2097148 free,        0 used.  3144884 avail Mem </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                    </span><br><span class="line">  2500 mysql     20   0 1182556 188432  10056 S   0.6  4.9   0:01.52 mysqld                                     </span><br><span class="line">     1 root      20   0  189244   4232   2408 S   0.0  0.1   0:02.52 systemd                                    </span><br><span class="line">     2 root      20   0       0      0      0 S   0.0  0.0   0:00.03 kthreadd                                   </span><br><span class="line">     3 root      20   0       0      0      0 S   0.0  0.0   0:00.01 ksoftirqd/0                                </span><br><span class="line">     5 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H                               </span><br><span class="line">     6 root      20   0       0      0      0 S   0.0  0.0   0:00.05 kworker/u256:0                             </span><br><span class="line">     7 root      rt   0       0      0      0 S   0.0  0.0   0:00.07 migration/0                                </span><br><span class="line">     8 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcu_bh                                     </span><br><span class="line">     9 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/0                                    </span><br><span class="line">    10 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/1                                    </span><br><span class="line">    11 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/2                                    </span><br><span class="line">    12 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/3                                    </span><br><span class="line">    13 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/4                                    </span><br><span class="line">    14 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/5                                    </span><br><span class="line">    15 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/6                                    </span><br><span class="line">    16 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/7                                    </span><br><span class="line">    17 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcuob/8</span><br></pre></td></tr></table></figure>
+
+<h1 id="free"><a href="#free" class="headerlink" title="free"></a>free</h1><p>查看系统内存。 -m 以兆为单位显示，-g 以G为单位显示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># free</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3866948      482152     2972304        9328      412492     3145432</span><br><span class="line">Swap:       2097148           0     2097148</span><br><span class="line">[root@localhost ~]<span class="comment"># free -m</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           3776         471        2902           9         402        3071</span><br><span class="line">Swap:          2047           0        2047</span><br><span class="line">[root@localhost ~]<span class="comment"># free -g</span></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:              3           0           2           0           0           2</span><br><span class="line">Swap:             1           0</span><br></pre></td></tr></table></figure>
+
+<h1 id="df"><a href="#df" class="headerlink" title="df"></a>df</h1><p>文件系统的磁盘空间占用情况 。  -h 表示以常用单位显示 。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># df</span></span><br><span class="line">文件系统                   1K-块    已用    可用 已用% 挂载点</span><br><span class="line">/dev/mapper/centos-root 18307072 9416900 8890172   52% /</span><br><span class="line">devtmpfs                 1918188       0 1918188    0% /dev</span><br><span class="line">tmpfs                    1933472      84 1933388    1% /dev/shm</span><br><span class="line">tmpfs                    1933472    9224 1924248    1% /run</span><br><span class="line">tmpfs                    1933472       0 1933472    0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1                 508588  160364  348224   32% /boot</span><br><span class="line">tmpfs                     386696       0  386696    0% /run/user/0</span><br><span class="line">tmpfs                     386696      16  386680    1% /run/user/42</span><br><span class="line">[root@localhost ~]<span class="comment"># df -h</span></span><br><span class="line">文件系统                 容量  已用  可用 已用% 挂载点</span><br><span class="line">/dev/mapper/centos-root   18G  9.0G  8.5G   52% /</span><br><span class="line">devtmpfs                 1.9G     0  1.9G    0% /dev</span><br><span class="line">tmpfs                    1.9G   84K  1.9G    1% /dev/shm</span><br><span class="line">tmpfs                    1.9G  9.1M  1.9G    1% /run</span><br><span class="line">tmpfs                    1.9G     0  1.9G    0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1                497M  157M  341M   32% /boot</span><br><span class="line">tmpfs                    378M     0  378M    0% /run/user/0</span><br><span class="line">tmpfs                    378M   16K  378M    1% /run/user/42</span><br></pre></td></tr></table></figure>
+
+<h1 id="vmstat"><a href="#vmstat" class="headerlink" title="vmstat"></a>vmstat</h1><p>显示虚拟内存状态（“Viryual Memor Statics”），它可以显示进程、内存、I/O等系统整体运行状态。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vmstat</span></span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   <span class="keyword">in</span>   cs us sy id wa st</span><br><span class="line"> 1  0      0 2972176   1260 411324    0    0    25     2   23   30  0  0 99  1  0</span><br><span class="line"> </span><br><span class="line">[root@localhost ~]<span class="comment"># vmstat -n 2 3    // 2 秒刷新一次，共 3 次</span></span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   <span class="keyword">in</span>   cs us sy id wa st</span><br><span class="line"> 1  0      0 2972036   1260 411324    0    0    25     2   23   30  0  0 99  1  0</span><br><span class="line"> 0  0      0 2972160   1260 411324    0    0     0     0   71  125  0  0 100  0  0</span><br><span class="line"> 0  0      0 2972160   1260 411324    0    0     0     0   64  109  0  0 100  0  0</span><br></pre></td></tr></table></figure>
+
+<p>字段解释：</p>
+<ul>
+<li>r: 运行队列中进程数量，这个值也可以判断是否需要增加CPU。（长期大于1） </li>
+<li>b: 等待IO的进程数量。 </li>
+<li>swpd:使用虚拟内存大小，如果swpd的值不为0，但是SI，SO的值长期为0，这种情况不会影响系统性能。 </li>
+<li>free: 空闲物理内存大小。</li>
+<li>id: 空闲时间百分比</li>
+</ul>
+<h1 id="mpstat"><a href="#mpstat" class="headerlink" title="mpstat"></a>mpstat</h1><p>查看所有 cpu 核信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># mpstat  // 输出为从系统启动以来的平均值。</span></span><br><span class="line">Linux 3.10.0-327.el7.x86_64 (localhost.localdomain) 	2019年06月29日 	_x86_64_	(8 CPU)</span><br><span class="line"></span><br><span class="line">14时23分28秒  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle</span><br><span class="line">14时23分28秒  all    0.02    0.00    0.14    0.38    0.00    0.00    0.00    0.00    0.00   99.45</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># mpstat -P ALL 2 3 // 查看所有cpu核信息，2 秒刷新一次，共 3 次</span></span><br><span class="line">Linux 3.10.0-327.el7.x86_64 (localhost.localdomain) 	2019年06月29日 	_x86_64_	(8 CPU)</span><br><span class="line"></span><br><span class="line">14时31分16秒  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle</span><br><span class="line">14时31分18秒  all    0.00    0.00    0.06    0.00    0.00    0.00    0.00    0.00    0.00   99.94</span><br><span class="line">14时31分18秒    0    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分18秒    1    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分18秒    2    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分18秒    3    0.00    0.00    0.50    0.00    0.00    0.00    0.00    0.00    0.00   99.50</span><br><span class="line">14时31分18秒    4    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分18秒    5    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分18秒    6    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分18秒    7    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line"></span><br><span class="line">14时31分18秒  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle</span><br><span class="line">14时31分20秒  all    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分20秒    0    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分20秒    1    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分20秒    2    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分20秒    3    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分20秒    4    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分20秒    5    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分20秒    6    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分20秒    7    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line"></span><br><span class="line">14时31分20秒  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle</span><br><span class="line">14时31分22秒  all    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分22秒    0    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分22秒    1    0.00    0.00    0.49    0.00    0.00    0.00    0.00    0.00    0.00   99.51</span><br><span class="line">14时31分22秒    2    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分22秒    3    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分22秒    4    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分22秒    5    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分22秒    6    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">14时31分22秒    7    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line"></span><br><span class="line">平均时间:  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle</span><br><span class="line">平均时间:  all    0.00    0.00    0.02    0.00    0.00    0.00    0.00    0.00    0.00   99.98</span><br><span class="line">平均时间:    0    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">平均时间:    1    0.00    0.00    0.17    0.00    0.00    0.00    0.00    0.00    0.00   99.83</span><br><span class="line">平均时间:    2    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">平均时间:    3    0.00    0.00    0.17    0.00    0.00    0.00    0.00    0.00    0.00   99.83</span><br><span class="line">平均时间:    4    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">平均时间:    5    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">平均时间:    6    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">平均时间:    7    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br></pre></td></tr></table></figure>
+
+<h1 id="pidstat"><a href="#pidstat" class="headerlink" title="pidstat"></a>pidstat</h1><p>用于监控全部或指定进程占用系统资源的情况，如CPU，内存、设备IO、任务切换、线程等。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># pidstat		//查看全部进程cpu使用信息</span></span><br><span class="line">Linux 3.10.0-327.el7.x86_64 (localhost.localdomain) 	2019年06月29日 	_x86_64_	(8 CPU)</span><br><span class="line"></span><br><span class="line">14时33分54秒   UID       PID    %usr %system  %guest    %CPU   CPU  Command</span><br><span class="line">14时33分54秒     0         1    0.00    0.11    0.00    0.11     0  systemd</span><br><span class="line">14时33分54秒     0         2    0.00    0.00    0.00    0.00     6  kthreadd</span><br><span class="line">14时33分54秒     0         3    0.00    0.00    0.00    0.00     0  ksoftirqd/0</span><br><span class="line">14时33分54秒     0         6    0.00    0.00    0.00    0.00     3  kworker/u256:0</span><br><span class="line">14时33分54秒     0         7    0.00    0.00    0.00    0.00     0  migration/0</span><br><span class="line">14时33分54秒     0       137    0.00    0.04    0.00    0.04     3  rcu_sched</span><br><span class="line">14时33分54秒     0       138    0.00    0.01    0.00    0.01     2  rcuos/0</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># pidstat -U 1 5 -p 2977   //查看 2977 进程cpu使用信息，1 秒一次，采集 5 次</span></span><br><span class="line">Linux 3.10.0-327.el7.x86_64 (localhost.localdomain) 	2019年06月29日 	_x86_64_	(8 CPU)</span><br><span class="line"></span><br><span class="line">14时36分50秒     USER       PID    %usr %system  %guest    %CPU   CPU  Command</span><br><span class="line">14时36分51秒      gdm      2977    0.00    0.00    0.00    0.00     7  goa-identity-se</span><br><span class="line">14时36分52秒      gdm      2977    0.00    0.00    0.00    0.00     7  goa-identity-se</span><br><span class="line">14时36分53秒      gdm      2977    0.00    0.00    0.00    0.00     7  goa-identity-se</span><br><span class="line">14时36分54秒      gdm      2977    0.00    0.00    0.00    0.00     7  goa-identity-se</span><br><span class="line">14时36分55秒      gdm      2977    0.00    0.00    0.00    0.00     7  goa-identity-se</span><br><span class="line">平均时间:      gdm      2977    0.00    0.00    0.00    0.00     -  goa-identity-se</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># pidstat -r 1 5 -p 2977   //查看 2977 进程内存的统计信息，1 秒一次，采集 5 次</span></span><br><span class="line">[root@localhost ~]<span class="comment"># pidstat -d 1 5 -p 2977   //查看 2977 进程 IO的统计信息，1 秒一次，采集 5 次</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="iostat"><a href="#iostat" class="headerlink" title="iostat"></a>iostat</h1><p>查看磁盘IO信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># iostat</span></span><br><span class="line">Linux 3.10.0-327.el7.x86_64 (localhost.localdomain) 	2019年06月29日 	_x86_64_	(8 CPU)</span><br><span class="line"></span><br><span class="line">avg-cpu:  %user   %nice %system %iowait  %steal   %idle</span><br><span class="line">           0.02    0.00    0.11    0.26    0.00   99.61</span><br><span class="line"></span><br><span class="line">Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn</span><br><span class="line">sda               4.32       106.80        10.54     366872      36194</span><br><span class="line">scd0              0.00         0.01         0.00         44          0</span><br><span class="line">dm-0              3.67        97.95         9.93     336460      34125</span><br><span class="line">dm-1              0.04         0.37         0.00       1268          0</span><br></pre></td></tr></table></figure>
+
+<h1 id="ifstat"><a href="#ifstat" class="headerlink" title="ifstat"></a>ifstat</h1><p>查看网络IO信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># ifstat</span></span><br><span class="line"><span class="comment">#kernel</span></span><br><span class="line">Interface        RX Pkts/Rate    TX Pkts/Rate    RX Data/Rate    TX Data/Rate  </span><br><span class="line">                 RX Errs/Drop    TX Errs/Drop    RX Over/Rate    TX Coll/Rate  </span><br><span class="line">lo                     4 0             4 0           340 0           340 0      </span><br><span class="line">                       0 0             0 0             0 0             0 0      </span><br><span class="line">eno16777736         1478 0          1307 0        118781 0        945129 0      </span><br><span class="line">                       0 0             0 0             0 0             0 0      </span><br><span class="line">virbr0                 0 0             0 0             0 0             0 0      </span><br><span class="line">                       0 0             0 0             0 0             0 0</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/28/线程池解析/" rel="next" title="Java 线程池解析">
+                <i class="fa fa-chevron-left"></i> Java 线程池解析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/29/Hexo-实用插件/" rel="prev" title="Hexo 实用插件">
+                Hexo 实用插件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/touxiang.png" alt="EAPHY">
+            
+              <p class="site-author-name" itemprop="name">EAPHY</p>
+              <div class="site-description motion-element" itemprop="description">专注于技术，厚积而薄发 !</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#uptime"><span class="nav-number">1.</span> <span class="nav-text">uptime</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#top"><span class="nav-number">2.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#free"><span class="nav-number">3.</span> <span class="nav-text">free</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#df"><span class="nav-number">4.</span> <span class="nav-text">df</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vmstat"><span class="nav-number">5.</span> <span class="nav-text">vmstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mpstat"><span class="nav-number">6.</span> <span class="nav-text">mpstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pidstat"><span class="nav-number">7.</span> <span class="nav-text">pidstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iostat"><span class="nav-number">8.</span> <span class="nav-text">iostat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ifstat"><span class="nav-number">9.</span> <span class="nav-text">ifstat</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EAPHY</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
