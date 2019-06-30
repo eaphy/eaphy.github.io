@@ -103,7 +103,7 @@
 <meta property="og:description" content="zookeeper 是什么 ?   ZooKeeper 是一个开源的分布式协调服务，是 Apache 顶级项目 Hadoop 中非常重要的组件。 zookeeper 能做什么 ? 统一配置、分布式锁、集群管理、注册中心、分布式队列">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561664220353&di=a33e662b065da674496c0ae8afdd1a72&imgtype=jpg&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D3720895078%2C2439817017%26fm%3D214%26gp%3D0.jpg">
-<meta property="og:updated_time" content="2019-06-30T11:52:37.613Z">
+<meta property="og:updated_time" content="2019-06-30T11:54:39.829Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper 原理解析">
 <meta name="twitter:description" content="zookeeper 是什么 ?   ZooKeeper 是一个开源的分布式协调服务，是 Apache 顶级项目 Hadoop 中非常重要的组件。 zookeeper 能做什么 ? 统一配置、分布式锁、集群管理、注册中心、分布式队列">
@@ -429,7 +429,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-30 19:52:37" itemprop="dateModified" datetime="2019-06-30T19:52:37+08:00">2019-06-30</time>
+                <time title="修改时间：2019-06-30 19:54:39" itemprop="dateModified" datetime="2019-06-30T19:54:39+08:00">2019-06-30</time>
               
             
           </span>
@@ -502,24 +502,14 @@
 <li><strong>EPHEMERAL_SEQUENTIAL-临时顺序节点</strong><br>客户端与zookeeper断开连接后，该节点被删除，只是Zookeeper给该节点名称进行顺序编号</li>
 </ul>
 <p><strong>会话：（Session）</strong><br>Session 指的是 ZooKeeper 服务器与客户端会话，是一个 TCP 长连接。通过这个连接，客户端能够通过心跳检测与服务器保持有效的会话，同时还能够接收来自服务器的 Watch 事件通知。在为客户端创建会话之前，服务端首先会为每个客户端都分配一个 sessionID，且具有全局唯一性。</p>
-<p><strong>版本：</strong><br>zookeeper 为数据节点引入了版本的概念。存在于一个Stat 的数据结构中，记录了这个 ZNode 的三个数据版本，分别是：<br>dataversion（当前 ZNode 的版本）、cversion（当前 ZNode 子节点的版本）、aclversion（当前 ZNode 的 ACL 版本）。用于保证分布式数据原子性操作。</p>
-<p><strong>watcher：</strong><br>Watcher（事件监听器），是 ZooKeeper 中的一个很重要的特性。ZooKeeper 允许用户在指定节点上注册一些 Watcher，并且在一些特定事件触发的时候，ZooKeeper 服务端会将事件通知到感兴趣的客户端上去，该机制是 ZooKeeper 实现分布式协调服务的重要特性。事件<strong>监听是一次性</strong>的，如果希望收到有关未来更改的通知，则必须设置另一个监听。</p>
-<p><strong>ACL：</strong><br>zookeeper 通过acl机制来实现对数据节点的权限控制。主要有五种权限：</p>
-</li>
-<li><p><strong>create</strong>    创建权限</p>
-</li>
-<li><p><strong>delete</strong> 子节点的删除权限</p>
-</li>
-<li><p><strong>read</strong>    读取权限</p>
-</li>
-<li><p><strong>write</strong>    更新权限</p>
-</li>
-<li><p><strong>admin</strong>        管理权限，能够进行ACL设置</p>
 </li>
 </ul>
 </li>
 </ul>
-<h1 id="zookeeper-特点"><a href="#zookeeper-特点" class="headerlink" title="zookeeper 特点"></a>zookeeper 特点</h1><ul>
+<p><strong>版本：</strong><br>    zookeeper 为数据节点引入了版本的概念。存在于一个Stat 的数据结构中，记录了这个 ZNode 的三个数据版本，分别是：<br>dataversion（当前 ZNode 的版本）、cversion（当前 ZNode 子节点的版本）、aclversion（当前 ZNode 的 ACL 版本）。用于保证分布式数据原子性操作。</p>
+<p><strong>watcher：</strong><br>    Watcher（事件监听器），是 ZooKeeper 中的一个很重要的特性。ZooKeeper 允许用户在指定节点上注册一些 Watcher，并且在一些特定事件触发的时候，ZooKeeper 服务端会将事件通知到感兴趣的客户端上去，该机制是 ZooKeeper 实现分布式协调服务的重要特性。事件<strong>监听是一次性</strong>的，如果希望收到有关未来更改的通知，则必须设置另一个监听。</p>
+<p><strong>ACL：</strong><br>    zookeeper 通过acl机制来实现对数据节点的权限控制。主要有五种权限：<br>     - <strong>create</strong>    创建权限<br>     - <strong>delete</strong> 子节点的删除权限<br>     - <strong>read</strong>    读取权限<br>     - <strong>write</strong>    更新权限<br>     - <strong>admin</strong>        管理权限，能够进行ACL设置</p>
+<h1 id="ZooKeeper-特点"><a href="#ZooKeeper-特点" class="headerlink" title="ZooKeeper 特点"></a>ZooKeeper 特点</h1><ul>
 <li><strong>顺序一致性</strong>：从同一客户端发起的事务请求，最终将会严格地按照顺序被应用到 ZooKeeper 中去。</li>
 <li><strong>原子性</strong>：所有事务请求的处理结果在整个集群中所有机器上的应用情况是一致的，要么整个集群中所有的机器都成功应用了某一个事务，要么都没有应用。</li>
 <li><strong>单一系统映像</strong>：无论客户端连到哪一个 ZooKeeper 服务器上，其看到的服务端数据模型都是一致的。</li>
@@ -752,7 +742,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-是什么"><span class="nav-number">1.</span> <span class="nav-text">zookeeper 是什么 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-能做什么"><span class="nav-number">2.</span> <span class="nav-text">zookeeper 能做什么 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-原理"><span class="nav-number">3.</span> <span class="nav-text">zookeeper 原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-特点"><span class="nav-number">4.</span> <span class="nav-text">zookeeper 特点</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-是什么"><span class="nav-number">1.</span> <span class="nav-text">zookeeper 是什么 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-能做什么"><span class="nav-number">2.</span> <span class="nav-text">zookeeper 能做什么 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-原理"><span class="nav-number">3.</span> <span class="nav-text">zookeeper 原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ZooKeeper-特点"><span class="nav-number">4.</span> <span class="nav-text">ZooKeeper 特点</span></a></li></ol></div>
             
 
           </div>
