@@ -1840,7 +1840,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff222a;
+  background: #ac2ba7;
 }
 .feed-link,
 .chat {
@@ -2859,20 +2859,4 @@ ul.breadcrumb li+li:last-child {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-.ImageGrid {
-  width: 100%;
-  max-width: 1040px;
-  margin: 0 auto;
-  text-align: center;
-}
-.card {
-  overflow: hidden;
-  transition: 0.3s ease-in-out;
-  border-radius: 8px;
-  background-color: #ddd;
-}
-.ImageInCard img {
-  padding: 0 0 0 0;
-  border-radius: 8px;
 }

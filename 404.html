@@ -36,12 +36,6 @@
 
 
 
-  
-  
-    
-  
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.css"/>
-
 
 
 
@@ -79,9 +73,9 @@
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
     back2top: true,
     back2top_sidebar: false,
-    fancybox: true,
+    fancybox: false,
     fastclick: false,
-    lazyload: true,
+    lazyload: false,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     algolia: {
@@ -656,14 +650,10 @@
 
 
 
-  
 
 
 
 
-
-
-  
 
 
 
@@ -683,20 +673,13 @@
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
 
   
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
-
-  
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
 
   
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
-  
-  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.js"></script>
-
 
   
-
 
 
   <script src="/js/utils.js?v=7.1.2"></script>
@@ -734,6 +717,10 @@
   
 
   
+  
+
+
+
 
 
 
@@ -1073,6 +1060,16 @@
   
 
   
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
 
   
 

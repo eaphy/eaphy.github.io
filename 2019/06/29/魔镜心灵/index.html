@@ -36,12 +36,6 @@
 
 
 
-  
-  
-    
-  
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.css">
-
 
 
 
@@ -79,9 +73,9 @@
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
     back2top: true,
     back2top_sidebar: false,
-    fancybox: true,
+    fancybox: false,
     fastclick: false,
-    lazyload: true,
+    lazyload: false,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     algolia: {
@@ -512,7 +506,7 @@
 <div id="decryptionError" style="display: none;">Incorrect Password!</div>
 <div id="noContentError" style="display: none;">No content to display!</div>
 <div id="encrypt-blog" style="display:none">
-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
+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
 </div>
 <script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
       
@@ -584,7 +578,10 @@ U2FsdGVkX19sa21qSl31Js226Dy1Bfuyj2igaBD8fGb2ITt+ckP9El9/+t6XrIJahBKh996CtsMAp7I5
           
 
   
-    <div class="comments" id="gitalk-container">
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
     </div>
 
   
@@ -789,14 +786,10 @@ U2FsdGVkX19sa21qSl31Js226Dy1Bfuyj2igaBD8fGb2ITt+ckP9El9/+t6XrIJahBKh996CtsMAp7I5
 
 
 
-  
 
 
 
 
-
-
-  
 
 
 
@@ -816,20 +809,13 @@ U2FsdGVkX19sa21qSl31Js226Dy1Bfuyj2igaBD8fGb2ITt+ckP9El9/+t6XrIJahBKh996CtsMAp7I5
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
 
   
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
-
-  
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
 
   
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
-  
-  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.js"></script>
-
 
   
-
 
 
   <script src="/js/utils.js?v=7.1.2"></script>
@@ -867,6 +853,45 @@ U2FsdGVkX19sa21qSl31Js226Dy1Bfuyj2igaBD8fGb2ITt+ckP9El9/+t6XrIJahBKh996CtsMAp7I5
   
 
   
+  
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/06/29/魔镜心灵/";
+    this.page.identifier = "2019/06/29/魔镜心灵/";
+    this.page.title = '魔镜心灵';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://eaphy.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    $(function() {
+      var offsetTop = $('#comments').offset().top - $(window).height();
+      if (offsetTop <= 0) {
+        // load directly when there's no a scrollbar
+        window.addEventListener('load', loadComments, false);
+      } else {
+        $(window).on('scroll.disqus_scroll', function() {
+          // offsetTop may changes because of manually resizing browser window or lazy loading images.
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          var scrollTop = $(window).scrollTop();
+
+          // pre-load comments a bit? (margin or anything else)
+          if (offsetTop - scrollTop < 60) {
+            $(window).off('.disqus_scroll');
+            loadComments();
+          }
+        });
+      }
+    });
+  
+</script>
+
+
+
 
 
   
@@ -1237,6 +1262,16 @@ U2FsdGVkX19sa21qSl31Js226Dy1Bfuyj2igaBD8fGb2ITt+ckP9El9/+t6XrIJahBKh996CtsMAp7I5
   
 
   
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
 
   
 
