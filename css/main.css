@@ -1840,7 +1840,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff8805;
+  background: #32a2e4;
 }
 .feed-link,
 .chat {
@@ -2091,6 +2091,14 @@ img:hover {
   50%, 70% {
     transform: scale(1.1);
   }
+}
+.gt-header a,
+.gt-comments a,
+.gt-popup a {
+  border-bottom: none;
+}
+.gt-container .gt-popup .gt-action.is--active:before {
+  top: 0.7em;
 }
 .local-search-pop-overlay {
   position: fixed;
@@ -2851,4 +2859,20 @@ ul.breadcrumb li+li:last-child {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.ImageGrid {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  text-align: center;
+}
+.card {
+  overflow: hidden;
+  transition: 0.3s ease-in-out;
+  border-radius: 8px;
+  background-color: #ddd;
+}
+.ImageInCard img {
+  padding: 0 0 0 0;
+  border-radius: 8px;
 }
