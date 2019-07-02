@@ -100,16 +100,14 @@
 
 
 
-  <meta name="description" content="专注于技术，厚积而薄发 !">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Eaphy&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/categories/网站运维/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="相册">
+<meta property="og:url" content="http://yoursite.com/photos/index.html">
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
-<meta property="og:description" content="专注于技术，厚积而薄发 !">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-02T17:35:57.046Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eaphy&#39;s Blog">
-<meta name="twitter:description" content="专注于技术，厚积而薄发 !">
+<meta name="twitter:title" content="相册">
 
 
 
@@ -117,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/categories/网站运维/">
+  <link rel="canonical" href="http://yoursite.com/photos/">
 
 
 
@@ -127,7 +125,7 @@
   };
 </script>
 
-  <title>分类: 网站运维 | Eaphy's Blog</title>
+  <title>相册 | Eaphy's Blog</title>
   
 
 
@@ -175,7 +173,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -249,7 +247,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -281,7 +279,7 @@
         
         
           
-          <li class="menu-item menu-item-photos">
+          <li class="menu-item menu-item-photos menu-item-active">
 
     
     
@@ -396,83 +394,61 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>网站运维<small>分类</small>
-        </h1>
-      </div>
+<h1 class="post-title" itemprop="name headline">相册
+
+</h1>
+
+<div class="post-meta">
+  
+  
+
+
+
+</div>
+
+</header>
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/06/29/Hexo-实用插件/" itemprop="url">
-            
-              <span itemprop="name">Hexo 实用插件</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-29T15:30:41+08:00" content="2019-06-29">
-          06-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
       
+      
+      <div class="post-body">
         
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
         
-          <a class="post-title-link" href="/2019/06/26/Hexo-Github-Next-搭建个人博客/" itemprop="url">
-            
-              <span itemprop="name">Hexo+Github+Next 搭建个人博客</span>
-            
-          </a>
-        
-      </h2>
+          <div class="ImageGrid"></div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-26T22:53:51+08:00" content="2019-06-26">
-          06-26
-        </time>
+        
       </div>
-
-    </header>
-  </article>
-
-
+      
+      
       
     </div>
+    
 
+
+
+    
+    
+    
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -732,6 +708,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
 
   
 
@@ -747,6 +727,37 @@
 
   
 
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '85115ca2339b16b0ceb1',
+    clientSecret: '20cb8cd7e54dd704ea79dbac6ad3c540a6d13211',
+    repo: 'eaphy.github.io',
+    owner: 'eaphy',
+    admin: ['eaphy'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
 
 
   
