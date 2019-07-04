@@ -94,15 +94,18 @@
 
 
 
-  <meta name="keywords" content="面试">
+  <meta name="description" content="HashMap 原理存储结构数组+链表+红黑树，链表的存在是为了解决hash冲突，当链表长度大于8的时候，后面的数据存放在红黑树中。 特点 快速存储 快速查找（时间复杂度为o(1)） 可伸缩">
+<meta name="keywords" content="面试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试突击">
 <meta property="og:url" content="http://yoursite.com/2019/07/04/面试突击/index.html">
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
+<meta property="og:description" content="HashMap 原理存储结构数组+链表+红黑树，链表的存在是为了解决hash冲突，当链表长度大于8的时候，后面的数据存放在红黑树中。 特点 快速存储 快速查找（时间复杂度为o(1)） 可伸缩">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-04T05:04:46.333Z">
+<meta property="og:updated_time" content="2019-07-04T05:38:52.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试突击">
+<meta name="twitter:description" content="HashMap 原理存储结构数组+链表+红黑树，链表的存在是为了解决hash冲突，当链表长度大于8的时候，后面的数据存放在红黑树中。 特点 快速存储 快速查找（时间复杂度为o(1)） 可伸缩">
 
 
 
@@ -407,7 +410,7 @@
                 
               
 
-              <time title="创建时间：2019-07-04 13:03:52 / 修改时间：13:04:46" itemprop="dateCreated datePublished" datetime="2019-07-04T13:03:52+08:00">2019-07-04</time>
+              <time title="创建时间：2019-07-04 13:03:52 / 修改时间：13:38:52" itemprop="dateCreated datePublished" datetime="2019-07-04T13:03:52+08:00">2019-07-04</time>
             
 
             
@@ -464,7 +467,38 @@
       
 
       
-        <a id="more"></a>
+        <h1 id="HashMap-原理"><a href="#HashMap-原理" class="headerlink" title="HashMap 原理"></a>HashMap 原理</h1><h3 id="存储结构"><a href="#存储结构" class="headerlink" title="存储结构"></a>存储结构</h3><p>数组+链表+红黑树，链表的存在是为了解决hash冲突，当链表长度大于8的时候，后面的数据存放在红黑树中。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>快速存储</li>
+<li>快速查找（时间复杂度为o(1)）</li>
+<li>可伸缩<a id="more"></a>
+
+
+</li>
+</ol>
+<h3 id="数组下标计算"><a href="#数组下标计算" class="headerlink" title="数组下标计算"></a>数组下标计算</h3><p>数组默认大小为：16<br>数组下标： hash &amp; （16-1） = hash % 16</p>
+<h3 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h3><p>初始容量16，最大容量2的30次方，加载因子系数为 0.75，即容量达到四分之三时，开始扩容，扩容增量为原容量的一倍，即一次扩容后容量为32</p>
+<h3 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h3><p><strong>put 操作：</strong></p>
+<ol>
+<li><p>首先判断key是否为null，若为null，直接插入数组第一个位置，数组原来有的数据，下标依次后移加一</p>
+</li>
+<li><p>若key不为null，计算key的hash值，取数组长度的模，得到其应该存储的数组位置</p>
+</li>
+<li><p>若该位置无值，直接插入</p>
+</li>
+<li><p>若该位置有值，判断链表中是否有key一样，有一样的话，覆盖原值，无一样的话，保存在链头</p>
+</li>
+</ol>
+<p><strong>get 操作：</strong></p>
+<ol>
+<li><p>判断key是否为null，若为null，直接返回null的值</p>
+</li>
+<li><p>若key不为null，根据key的hash值，确定数组位置</p>
+</li>
+<li><p>遍历链表，返回key的hash值相同，且key一样的value</p>
+</li>
+</ol>
+
       
     </div>
 
@@ -559,8 +593,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -668,6 +711,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HashMap-原理"><span class="nav-number">1.</span> <span class="nav-text">HashMap 原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储结构"><span class="nav-number">1.0.1.</span> <span class="nav-text">存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">1.0.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组下标计算"><span class="nav-number">1.0.3.</span> <span class="nav-text">数组下标计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩容"><span class="nav-number">1.0.4.</span> <span class="nav-text">扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作流程"><span class="nav-number">1.0.5.</span> <span class="nav-text">操作流程</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
