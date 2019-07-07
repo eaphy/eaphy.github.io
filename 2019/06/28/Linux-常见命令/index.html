@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
 <meta property="og:description" content="uptime精简版显示系统负载均衡。load average: 0.00, 0.09, 0.10， 分别代表1分钟、5分钟、15分钟的负载均衡。 12[root@localhost ~]# uptime 13:54:10 up 9 min,  2 users,  load average: 0.00, 0.09, 0.10">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-29T11:01:53.526Z">
+<meta property="og:updated_time" content="2019-07-06T16:59:24.946Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux 常见命令">
 <meta name="twitter:description" content="uptime精简版显示系统负载均衡。load average: 0.00, 0.09, 0.10， 分别代表1分钟、5分钟、15分钟的负载均衡。 12[root@localhost ~]# uptime 13:54:10 up 9 min,  2 users,  load average: 0.00, 0.09, 0.10">
@@ -427,7 +427,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-29 19:01:53" itemprop="dateModified" datetime="2019-06-29T19:01:53+08:00">2019-06-29</time>
+                <time title="修改时间：2019-07-07 00:59:24" itemprop="dateModified" datetime="2019-07-07T00:59:24+08:00">2019-07-07</time>
               
             
           </span>
@@ -520,7 +520,7 @@
 <h1 id="ifstat"><a href="#ifstat" class="headerlink" title="ifstat"></a>ifstat</h1><p>查看网络IO信息。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># ifstat</span></span><br><span class="line"><span class="comment">#kernel</span></span><br><span class="line">Interface        RX Pkts/Rate    TX Pkts/Rate    RX Data/Rate    TX Data/Rate  </span><br><span class="line">                 RX Errs/Drop    TX Errs/Drop    RX Over/Rate    TX Coll/Rate  </span><br><span class="line">lo                     4 0             4 0           340 0           340 0      </span><br><span class="line">                       0 0             0 0             0 0             0 0      </span><br><span class="line">eno16777736         1478 0          1307 0        118781 0        945129 0      </span><br><span class="line">                       0 0             0 0             0 0             0 0      </span><br><span class="line">virbr0                 0 0             0 0             0 0             0 0      </span><br><span class="line">                       0 0             0 0             0 0             0 0</span><br></pre></td></tr></table></figure>
 
-
+<h1 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h1>
       
     </div>
 
@@ -646,7 +646,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -748,7 +748,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#uptime"><span class="nav-number">1.</span> <span class="nav-text">uptime</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#top"><span class="nav-number">2.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#free"><span class="nav-number">3.</span> <span class="nav-text">free</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#df"><span class="nav-number">4.</span> <span class="nav-text">df</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vmstat"><span class="nav-number">5.</span> <span class="nav-text">vmstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mpstat"><span class="nav-number">6.</span> <span class="nav-text">mpstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pidstat"><span class="nav-number">7.</span> <span class="nav-text">pidstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iostat"><span class="nav-number">8.</span> <span class="nav-text">iostat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ifstat"><span class="nav-number">9.</span> <span class="nav-text">ifstat</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#uptime"><span class="nav-number">1.</span> <span class="nav-text">uptime</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#top"><span class="nav-number">2.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#free"><span class="nav-number">3.</span> <span class="nav-text">free</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#df"><span class="nav-number">4.</span> <span class="nav-text">df</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vmstat"><span class="nav-number">5.</span> <span class="nav-text">vmstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mpstat"><span class="nav-number">6.</span> <span class="nav-text">mpstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pidstat"><span class="nav-number">7.</span> <span class="nav-text">pidstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iostat"><span class="nav-number">8.</span> <span class="nav-text">iostat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ifstat"><span class="nav-number">9.</span> <span class="nav-text">ifstat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#awk"><span class="nav-number">10.</span> <span class="nav-text">awk</span></a></li></ol></div>
             
 
           </div>
