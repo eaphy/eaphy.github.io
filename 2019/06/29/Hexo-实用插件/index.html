@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
 <meta property="og:description" content="搜索插件进入博客根目录，从cmd输入以下命令 1npm install hexo-generator-searchdb --save  修改 站点配置 文件，注意 search.xml 的路径">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-29T08:59:21.334Z">
+<meta property="og:updated_time" content="2019-07-07T09:55:14.898Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 实用插件">
 <meta name="twitter:description" content="搜索插件进入博客根目录，从cmd输入以下命令 1npm install hexo-generator-searchdb --save  修改 站点配置 文件，注意 search.xml 的路径">
@@ -410,12 +410,24 @@
                 
               
 
-              <time title="创建时间：2019-06-29 15:30:41 / 修改时间：16:59:21" itemprop="dateCreated datePublished" datetime="2019-06-29T15:30:41+08:00">2019-06-29</time>
+              <time title="创建时间：2019-06-29 15:30:41" itemprop="dateCreated datePublished" datetime="2019-06-29T15:30:41+08:00">2019-06-29</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-07 17:55:14" itemprop="dateModified" datetime="2019-07-07T17:55:14+08:00">2019-07-07</time>
               
             
           </span>
@@ -491,6 +503,13 @@
 
 <p>在文章头部加入：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 测试密码</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br><span class="line">top: 1</span><br><span class="line">date: 2019-06-29 16:54:51</span><br><span class="line">password: 123456</span><br><span class="line">abstract: 加密文章，点击 阅读全文，输入密码之后访问全文 ！</span><br><span class="line">message: 请输入密码，回车查看文章内容 ！</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<h1 id="图片懒加载插件"><a href="#图片懒加载插件" class="headerlink" title="图片懒加载插件"></a>图片懒加载插件</h1><p>进入博客根目录，从cmd输入以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-lazyload-image --save</span><br></pre></td></tr></table></figure>
+
+<p>修改 站点配置 文件，添加以下内容</p>
+<!-- more -->
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lazyload:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">  onlypost: <span class="literal">false</span></span><br><span class="line">  loadingImg: /images/loading.png</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -718,7 +737,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#搜索插件"><span class="nav-number">1.</span> <span class="nav-text">搜索插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GIT-插件"><span class="nav-number">2.</span> <span class="nav-text">GIT 插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加密插件"><span class="nav-number">3.</span> <span class="nav-text">加密插件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#搜索插件"><span class="nav-number">1.</span> <span class="nav-text">搜索插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GIT-插件"><span class="nav-number">2.</span> <span class="nav-text">GIT 插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加密插件"><span class="nav-number">3.</span> <span class="nav-text">加密插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图片懒加载插件"><span class="nav-number">4.</span> <span class="nav-text">图片懒加载插件</span></a></li></ol></div>
             
 
           </div>
