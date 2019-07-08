@@ -94,18 +94,18 @@
 
 
 
-  <meta name="description" content="主要作用 作为分布式数据库中间层 实现读写分离和负载均衡 对业务数据库进行垂直切分 对业务数据库进行水平切分 控制数据库连接的数量">
-<meta name="keywords" content="mycat">
+  <meta name="description" content="不使用异步提交任务12345678910111213@Servicepublic class UserManager &amp;#123;    // 模拟耗时业务    public int sleep1() throws InterruptedException &amp;#123;        Thread.sleep(2000);        return 2;    &amp;#125;    // 模拟耗">
+<meta name="keywords" content="java,futuretask,taskexecutor,springboot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mycat 解析">
-<meta property="og:url" content="http://yoursite.com/2019/07/07/mycat-解析/index.html">
+<meta property="og:title" content="springboot 异步任务(taskExecutor+FutureTask)">
+<meta property="og:url" content="http://yoursite.com/2019/07/08/springboot-异步任务-taskExecutor-FutureTask/index.html">
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
-<meta property="og:description" content="主要作用 作为分布式数据库中间层 实现读写分离和负载均衡 对业务数据库进行垂直切分 对业务数据库进行水平切分 控制数据库连接的数量">
+<meta property="og:description" content="不使用异步提交任务12345678910111213@Servicepublic class UserManager &amp;#123;    // 模拟耗时业务    public int sleep1() throws InterruptedException &amp;#123;        Thread.sleep(2000);        return 2;    &amp;#125;    // 模拟耗">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-07T10:05:24.113Z">
+<meta property="og:updated_time" content="2019-07-08T15:34:25.987Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mycat 解析">
-<meta name="twitter:description" content="主要作用 作为分布式数据库中间层 实现读写分离和负载均衡 对业务数据库进行垂直切分 对业务数据库进行水平切分 控制数据库连接的数量">
+<meta name="twitter:title" content="springboot 异步任务(taskExecutor+FutureTask)">
+<meta name="twitter:description" content="不使用异步提交任务12345678910111213@Servicepublic class UserManager &amp;#123;    // 模拟耗时业务    public int sleep1() throws InterruptedException &amp;#123;        Thread.sleep(2000);        return 2;    &amp;#125;    // 模拟耗">
 
 
 
@@ -113,7 +113,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/07/07/mycat-解析/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/08/springboot-异步任务-taskExecutor-FutureTask/">
 
 
 
@@ -123,7 +123,7 @@
   };
 </script>
 
-  <title>mycat 解析 | Eaphy's Blog</title>
+  <title>springboot 异步任务(taskExecutor+FutureTask) | Eaphy's Blog</title>
   
 
 
@@ -367,7 +367,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/mycat-解析/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/springboot-异步任务-taskExecutor-FutureTask/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EAPHY">
@@ -384,7 +384,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">mycat 解析
+          <h1 class="post-title" itemprop="name headline">springboot 异步任务(taskExecutor+FutureTask)
 
               
             
@@ -410,7 +410,7 @@
                 
               
 
-              <time title="创建时间：2019-07-07 14:22:40 / 修改时间：18:05:24" itemprop="dateCreated datePublished" datetime="2019-07-07T14:22:40+08:00">2019-07-07</time>
+              <time title="创建时间：2019-07-08 22:11:03 / 修改时间：23:34:25" itemprop="dateCreated datePublished" datetime="2019-07-08T22:11:03+08:00">2019-07-08</time>
             
 
             
@@ -432,7 +432,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/多线程/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
 
                 
                 
@@ -467,31 +467,37 @@
       
 
       
-        <h1 id="主要作用"><a href="#主要作用" class="headerlink" title="主要作用"></a>主要作用</h1><ol>
-<li>作为分布式数据库中间层</li>
-<li>实现读写分离和负载均衡</li>
-<li>对业务数据库进行垂直切分</li>
-<li>对业务数据库进行水平切分</li>
-<li>控制数据库连接的数量<a id="more"></a>
+        <h1 id="不使用异步提交任务"><a href="#不使用异步提交任务" class="headerlink" title="不使用异步提交任务"></a>不使用异步提交任务</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserManager</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 模拟耗时业务</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sleep1</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 模拟耗时业务</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sleep2</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
 
 
-</li>
-</ol>
-<h1 id="基本元素"><a href="#基本元素" class="headerlink" title="基本元素"></a>基本元素</h1><h2 id="逻辑库"><a href="#逻辑库" class="headerlink" title="逻辑库"></a>逻辑库</h2><ol>
-<li>对应用来说相当于mysql中的数据库</li>
-<li>逻辑库可对应后端多个物理数据库</li>
-<li>逻辑库中并不保存数据</li>
-</ol>
-<h2 id="逻辑表"><a href="#逻辑表" class="headerlink" title="逻辑表"></a>逻辑表</h2><h3 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h3><ol>
-<li>对应用来说相当于mysql中的数据表</li>
-<li>逻辑表可对应后端多个物理数据表</li>
-<li>逻辑表中并不保存数据</li>
-</ol>
-<h3 id="类别"><a href="#类别" class="headerlink" title="类别"></a>类别</h3><ol>
-<li>分片表与非分片表按是否被分片划分</li>
-<li>全局表，在所有分片中都存在的表</li>
-<li>ER 关系表，按ER关系进行分片的表</li>
-</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> UserManager userManager;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/noExecutor"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">noExecutor</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> a =System.currentTimeMillis();</span><br><span class="line">        sleep1();</span><br><span class="line">        sleep2();</span><br><span class="line">        <span class="keyword">long</span> b = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        JSONObject object = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        object.put(<span class="string">"同步耗时"</span>,b-a);</span><br><span class="line">        <span class="keyword">return</span> object;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">结果： &#123;<span class="string">"同步耗时"</span>:<span class="number">5001</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用-TaskExecutor-手动完成异步任务"><a href="#使用-TaskExecutor-手动完成异步任务" class="headerlink" title="使用 TaskExecutor 手动完成异步任务"></a>使用 TaskExecutor 手动完成异步任务</h1><p>在springboot启动文件中，添加 <code>@EnableAsync</code> 注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableAsync</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LearnningApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(LearnningApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新建一个线程池配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAsync</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPoolConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ThreadPoolTaskExecutor <span class="title">getExecutor</span><span class="params">()</span></span>&#123;</span><br><span class="line">        ThreadPoolTaskExecutor executor = <span class="keyword">new</span> ThreadPoolTaskExecutor();</span><br><span class="line">        executor.setCorePoolSize(<span class="number">10</span>);</span><br><span class="line">        executor.setMaxPoolSize(<span class="number">100</span>);</span><br><span class="line">        executor.setQueueCapacity(<span class="number">10</span>);</span><br><span class="line">        executor.setKeepAliveSeconds(<span class="number">60</span>);</span><br><span class="line">        <span class="keyword">return</span> executor;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 这里新建了两个 ThreadPoolTaskExecutor ，根据业务需求更改</span></span><br><span class="line">    <span class="meta">@Primary</span></span><br><span class="line">    <span class="meta">@Bean</span>(<span class="string">"taskExecutor"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ThreadPoolTaskExecutor <span class="title">taskExecutor</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getExecutor();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span>(<span class="string">"otherExecutor"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ThreadPoolTaskExecutor <span class="title">otherExecutor</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getExecutor();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 controller 测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span>(name=<span class="string">"taskExecutor"</span>)</span><br><span class="line">    <span class="keyword">private</span> ThreadPoolTaskExecutor taskExecutor;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> UserManager userManager;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/taskExecutor"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">taskExecutor</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> a =System.currentTimeMillis();</span><br><span class="line">        CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(<span class="number">2</span>);</span><br><span class="line">        taskExecutor.execute(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                userManager.sleep1();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            countDownLatch.countDown();</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        taskExecutor.execute(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                userManager.sleep2();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            countDownLatch.countDown();</span><br><span class="line">        &#125;);</span><br><span class="line">        countDownLatch.await();</span><br><span class="line">        <span class="keyword">long</span> b = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        JSONObject object = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        object.put(<span class="string">"异步耗时"</span>,b-a);</span><br><span class="line">        <span class="keyword">return</span> object;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">访问 http:<span class="comment">//localhost:8083/demo/user/taskExecutor  结果： &#123;"异步耗时":3002&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="使用-TaskExecutor-注解完成异步任务"><a href="#使用-TaskExecutor-注解完成异步任务" class="headerlink" title="使用 TaskExecutor 注解完成异步任务"></a>使用 TaskExecutor 注解完成异步任务</h1><p>只需要将 service 层的方法加上 <code>@Async(&quot;taskExecutor&quot;)</code> 注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserManager</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 模拟耗时业务</span></span><br><span class="line">    <span class="meta">@Async</span>(<span class="string">"taskExecutor"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sleep3</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;		<span class="comment">//必须无返回值，或者返回future</span></span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 模拟耗时业务</span></span><br><span class="line">    <span class="meta">@Async</span>(<span class="string">"taskExecutor"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sleep4</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/anoTaskExecutor"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">anoTaskExecutor</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> a =System.currentTimeMillis();</span><br><span class="line">    userManager.sleep3();</span><br><span class="line">    userManager.sleep4();</span><br><span class="line">    <span class="keyword">long</span> b = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">    JSONObject object = <span class="keyword">new</span> JSONObject();</span><br><span class="line">    object.put(<span class="string">"异步耗时"</span>,b-a);</span><br><span class="line">    <span class="keyword">return</span> object;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">访问 http:<span class="comment">//localhost:8083/demo/user/anoTaskExecutor  结果： &#123;"异步耗时":1&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="使用-FutureTask-完成异步任务"><a href="#使用-FutureTask-完成异步任务" class="headerlink" title="使用 FutureTask 完成异步任务"></a>使用 FutureTask 完成异步任务</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/futureTask"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">futureTask</span><span class="params">()</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> a =System.currentTimeMillis();</span><br><span class="line">    List&lt;FutureTask&lt;Integer&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    FutureTask&lt;Integer&gt; futureTask1 = <span class="keyword">new</span> FutureTask&lt;&gt;(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">return</span> userManager.sleep1();</span><br><span class="line">    &#125;);</span><br><span class="line">    list.add(futureTask1);</span><br><span class="line">    FutureTask&lt;Integer&gt; futureTask2 = <span class="keyword">new</span> FutureTask&lt;&gt;(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">return</span> userManager.sleep2();</span><br><span class="line">    &#125;);</span><br><span class="line">    list.add(futureTask2);</span><br><span class="line"></span><br><span class="line">    list.parallelStream().forEach(futureTask-&gt;&#123;</span><br><span class="line">        taskExecutor.submit(futureTask);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i =<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (FutureTask&lt;Integer&gt; futureTask:list) &#123;</span><br><span class="line">        i+=futureTask.get();    <span class="comment">//获取异步任务结果</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">long</span> b = System.currentTimeMillis();</span><br><span class="line">    JSONObject object = <span class="keyword">new</span> JSONObject();</span><br><span class="line">    object.put(<span class="string">"耗时"</span>,b-a);</span><br><span class="line">    object.put(<span class="string">"结果"</span>,i);</span><br><span class="line">    <span class="keyword">return</span> object;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">结果： &#123;<span class="string">"耗时"</span>:<span class="number">3001</span>,<span class="string">"结果"</span>:<span class="number">5</span>&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -518,7 +524,13 @@
         
         <div class="post-tags">
           
-            <a href="/tags/mycat/" rel="tag"><i class="fa fa-tag"></i> mycat</a>
+            <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+          
+            <a href="/tags/futuretask/" rel="tag"><i class="fa fa-tag"></i> futuretask</a>
+          
+            <a href="/tags/taskexecutor/" rel="tag"><i class="fa fa-tag"></i> taskexecutor</a>
+          
+            <a href="/tags/springboot/" rel="tag"><i class="fa fa-tag"></i> springboot</a>
           
         </div>
       
@@ -531,8 +543,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/04/面试突击/" rel="next" title="面试突击">
-                <i class="fa fa-chevron-left"></i> 面试突击
+              <a href="/2019/07/07/mycat-解析/" rel="next" title="mycat 解析">
+                <i class="fa fa-chevron-left"></i> mycat 解析
               </a>
             
           </div>
@@ -540,10 +552,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/08/springboot-异步任务-taskExecutor-FutureTask/" rel="prev" title="springboot 异步任务(taskExecutor+FutureTask)">
-                springboot 异步任务(taskExecutor+FutureTask) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -732,7 +740,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要作用"><span class="nav-number">1.</span> <span class="nav-text">主要作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本元素"><span class="nav-number">2.</span> <span class="nav-text">基本元素</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑库"><span class="nav-number">2.1.</span> <span class="nav-text">逻辑库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑表"><span class="nav-number">2.2.</span> <span class="nav-text">逻辑表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#含义"><span class="nav-number">2.2.1.</span> <span class="nav-text">含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类别"><span class="nav-number">2.2.2.</span> <span class="nav-text">类别</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#不使用异步提交任务"><span class="nav-number">1.</span> <span class="nav-text">不使用异步提交任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-TaskExecutor-手动完成异步任务"><span class="nav-number">2.</span> <span class="nav-text">使用 TaskExecutor 手动完成异步任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-TaskExecutor-注解完成异步任务"><span class="nav-number">3.</span> <span class="nav-text">使用 TaskExecutor 注解完成异步任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-FutureTask-完成异步任务"><span class="nav-number">4.</span> <span class="nav-text">使用 FutureTask 完成异步任务</span></a></li></ol></div>
             
 
           </div>
