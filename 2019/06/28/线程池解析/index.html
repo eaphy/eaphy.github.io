@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
 <meta property="og:description" content="线程池作用 利用线程池管理并复用线程、控制最大并发数等 实现任务线程队列缓存策略和拒绝机制 实现某些与时间相关的功能，如定时执行、周期执行等 隔离线程环境，比如，交易服务和搜索服务在同一台服务器上,分别开启两个线程池,交易线程的资源消耗明显要大;因此,通过配置独立的线程池,将较慢的交易服务与搜索服务隔离开,避免各服务线程相互影响.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-10T15:09:57.354Z">
+<meta property="og:updated_time" content="2019-07-11T05:43:36.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 线程池解析">
 <meta name="twitter:description" content="线程池作用 利用线程池管理并复用线程、控制最大并发数等 实现任务线程队列缓存策略和拒绝机制 实现某些与时间相关的功能，如定时执行、周期执行等 隔离线程环境，比如，交易服务和搜索服务在同一台服务器上,分别开启两个线程池,交易线程的资源消耗明显要大;因此,通过配置独立的线程池,将较慢的交易服务与搜索服务隔离开,避免各服务线程相互影响.">
@@ -495,7 +495,7 @@
 </ul>
 <h1 id="JDK-自带的线程池"><a href="#JDK-自带的线程池" class="headerlink" title="JDK 自带的线程池"></a>JDK 自带的线程池</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单线程</span></span><br><span class="line">Executor executor1 = Executors.newSingleThreadExecutor();</span><br><span class="line"><span class="comment">// 固定长度</span></span><br><span class="line">Executor executor2 = Executors.newFixedThreadPool(<span class="number">5</span>);</span><br><span class="line"><span class="comment">// 可扩展，随需创建线程数</span></span><br><span class="line">Executor executor3 = Executors.newCachedThreadPool();</span><br></pre></td></tr></table></figure>
 
-<p>一般不用直接使用以上三种，而是手写 ThreadPoolExecutor 实现线程池，因为阻塞队列的最大值为 Integer.MAX_VALUE ，会造成OOM。</p>
+<p>一般不会直接使用以上三种，而是手写 ThreadPoolExecutor 实现线程池，因为阻塞队列的最大值为 Integer.MAX_VALUE ，会造成OOM。</p>
 <h1 id="合理配置线程池"><a href="#合理配置线程池" class="headerlink" title="合理配置线程池"></a>合理配置线程池</h1><p><strong>1. cpu 密集型：(需要大量运算，不会阻塞，宜少配置线程数)</strong></p>
 <p>cpu核心数+1</p>
 <p><strong>2. IO 密集型：（需要大量IO，会阻塞，宜多配置线程数）</strong></p>
