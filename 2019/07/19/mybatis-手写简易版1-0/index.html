@@ -94,19 +94,19 @@
 
 
 
-  <meta name="description" content="zookeeper 简介   ZooKeeper 是一个开源的分布式协调服务，是 Apache 顶级项目 Hadoop 中非常重要的组件。 zookeeper 作用 统一配置、分布式锁、集群管理、注册中心、分布式队列">
-<meta name="keywords" content="zookeeper">
+  <meta name="description" content="架构组成">
+<meta name="keywords" content="mybatis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="zookeeper 原理解析">
-<meta property="og:url" content="http://yoursite.com/2019/06/28/zookeeper-原理解析/index.html">
+<meta property="og:title" content="mybatis - 手写简易版1.0">
+<meta property="og:url" content="http://yoursite.com/2019/07/19/mybatis-手写简易版1-0/index.html">
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
-<meta property="og:description" content="zookeeper 简介   ZooKeeper 是一个开源的分布式协调服务，是 Apache 顶级项目 Hadoop 中非常重要的组件。 zookeeper 作用 统一配置、分布式锁、集群管理、注册中心、分布式队列">
+<meta property="og:description" content="架构组成">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/img/loading.gif">
-<meta property="og:updated_time" content="2019-07-10T15:09:32.708Z">
+<meta property="og:updated_time" content="2019-07-19T16:09:40.414Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zookeeper 原理解析">
-<meta name="twitter:description" content="zookeeper 简介   ZooKeeper 是一个开源的分布式协调服务，是 Apache 顶级项目 Hadoop 中非常重要的组件。 zookeeper 作用 统一配置、分布式锁、集群管理、注册中心、分布式队列">
+<meta name="twitter:title" content="mybatis - 手写简易版1.0">
+<meta name="twitter:description" content="架构组成">
 <meta name="twitter:image" content="http://yoursite.com/img/loading.gif">
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/06/28/zookeeper-原理解析/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/19/mybatis-手写简易版1-0/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>zookeeper 原理解析 | Eaphy's Blog</title>
+  <title>mybatis - 手写简易版1.0 | Eaphy's Blog</title>
   
 
 
@@ -369,7 +369,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/zookeeper-原理解析/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/19/mybatis-手写简易版1-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EAPHY">
@@ -386,7 +386,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">zookeeper 原理解析
+          <h1 class="post-title" itemprop="name headline">mybatis - 手写简易版1.0
 
               
             
@@ -413,7 +413,7 @@
                 
               
 
-              <time title="创建时间：2019-06-28 01:04:37" itemprop="dateCreated datePublished" datetime="2019-06-28T01:04:37+08:00">2019-06-28</time>
+              <time title="创建时间：2019-07-19 23:01:06" itemprop="dateCreated datePublished" datetime="2019-07-19T23:01:06+08:00">2019-07-19</time>
             
 
             
@@ -466,58 +466,39 @@
       
 
       
-        <h1 id="zookeeper-简介"><a href="#zookeeper-简介" class="headerlink" title="zookeeper 简介"></a>zookeeper 简介</h1><p>   ZooKeeper 是一个开源的分布式协调服务，是 Apache 顶级项目 Hadoop 中非常重要的组件。</p>
-<h1 id="zookeeper-作用"><a href="#zookeeper-作用" class="headerlink" title="zookeeper 作用"></a>zookeeper 作用</h1><p> 统一配置、分布式锁、集群管理、注册中心、分布式队列</p>
- <a id="more"></a>
+        <h1 id="架构组成"><a href="#架构组成" class="headerlink" title="架构组成"></a>架构组成</h1><img src="/img/loading.gif" data-original="/img/19071901.png" style="width: 640px; height: 400px!important; " align="center/">
 
-<h1 id="zookeeper-结构"><a href="#zookeeper-结构" class="headerlink" title="zookeeper 结构"></a>zookeeper 结构</h1><ul>
-<li><strong>数据模型</strong></li>
-</ul>
-<p><img src="/img/loading.gif" data-original="/img/zk.jpg" alt="zookeeper 数据结构"></p>
-<p>ZooKeeper 数据模型的结构与Unix文件系统很类似，每个节点称作一个ZNode，ZNode 是以 key-value 形式存在的。</p>
-<ul>
-<li><p><strong>重要概念</strong></p>
-<h2 id="Znode："><a href="#Znode：" class="headerlink" title="Znode："></a>Znode：</h2><p>zookeeper 中每个文件系统路径就是一个节点。节点有四种：</p>
-<ul>
-<li><strong>PERSISTENT-持久化节点</strong><br>客户端与zookeeper断开连接后，该节点依旧存在</li>
-<li><strong>PERSISTENT_SEQUENTIAL-持久化顺序节点</strong><br>客户端与zookeeper断开连接后，该节点依旧存在，只是Zookeeper给该节点名称进行顺序编号</li>
-<li><strong>EPHEMERAL-临时节点</strong><br>客户端与zookeeper断开连接后，该节点被删除</li>
-<li><strong>EPHEMERAL_SEQUENTIAL-临时顺序节点</strong><br>客户端与zookeeper断开连接后，该节点被删除，只是Zookeeper给该节点名称进行顺序编号</li>
-</ul>
-<h2 id="会话：-Session"><a href="#会话：-Session" class="headerlink" title="会话：(Session)"></a>会话：(Session)</h2><p>Session 指的是 ZooKeeper 服务器与客户端会话，是一个 TCP 长连接。通过这个连接，客户端能够通过心跳检测与服务器保持有效的会话，同时还能够接收来自服务器的 Watch 事件通知。在为客户端创建会话之前，服务端首先会为每个客户端都分配一个 sessionID，且具有全局唯一性。</p>
-<h2 id="版本："><a href="#版本：" class="headerlink" title="版本："></a>版本：</h2><p>zookeeper 为数据节点引入了版本的概念。存在于一个Stat 的数据结构中，记录了这个 ZNode 的三个数据版本，分别是：<br>dataversion（当前 ZNode 的版本）、cversion（当前 ZNode 子节点的版本）、aclversion（当前 ZNode 的 ACL 版本）。用于保证分布式数据原子性操作。</p>
-<h2 id="watcher："><a href="#watcher：" class="headerlink" title="watcher："></a>watcher：</h2><p>Watcher（事件监听器），是 ZooKeeper 中的一个很重要的特性。ZooKeeper 允许用户在指定节点上注册一些 Watcher，并且在一些特定事件触发的时候，ZooKeeper 服务端会将事件通知到感兴趣的客户端上去，该机制是 ZooKeeper 实现分布式协调服务的重要特性。事件<strong>监听是一次性</strong>的，如果希望收到有关未来更改的通知，则必须设置另一个监听。</p>
-<h2 id="ACL："><a href="#ACL：" class="headerlink" title="ACL："></a>ACL：</h2><p>zookeeper 通过acl机制来实现对数据节点的权限控制。主要有五种权限：</p>
-<ul>
-<li><strong>create</strong>    创建权限</li>
-<li><strong>delete</strong> 子节点的删除权限</li>
-<li><strong>read</strong>    读取权限</li>
-<li><strong>write</strong>    更新权限</li>
-<li><strong>admin</strong>    管理权限，能够进行ACL设置</li>
-</ul>
-</li>
-</ul>
-<h1 id="zookeeper-特点"><a href="#zookeeper-特点" class="headerlink" title="zookeeper 特点"></a>zookeeper 特点</h1><ul>
-<li><strong>顺序一致性</strong>：从同一客户端发起的事务请求，最终将会严格地按照顺序被应用到 ZooKeeper 中去。</li>
-<li><strong>原子性</strong>：所有事务请求的处理结果在整个集群中所有机器上的应用情况是一致的，要么整个集群中所有的机器都成功应用了某一个事务，要么都没有应用。</li>
-<li><strong>单一系统映像</strong>：无论客户端连到哪一个 ZooKeeper 服务器上，其看到的服务端数据模型都是一致的。</li>
-<li><strong>可靠性</strong>：一旦一次更改请求被应用，更改的结果就会被持久化，直到被下一次更改覆盖。</li>
-</ul>
-<h1 id="zookeeper-角色"><a href="#zookeeper-角色" class="headerlink" title="zookeeper 角色"></a>zookeeper 角色</h1><ul>
-<li><strong>Leader</strong>    提供读写</li>
-<li><strong>Follower</strong>      提供读</li>
-<li><strong>Observer</strong>      提供读，不参与选举</li>
-</ul>
-<h1 id="zookeeper-原理"><a href="#zookeeper-原理" class="headerlink" title="zookeeper 原理"></a>zookeeper 原理</h1><p>Zookeeper的核心是原子广播，这个机制保证了各个Server之间的同步，实现这个机制的协议叫做Zab协议。Zab协议有两种模式，它们分别是恢复模式（选主）和广播模式（同步）。当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数Server完成了和 leader的状态同步以后，恢复模式就结束了。状态同步保证了leader和Server具有相同的系统状态。</p>
-<p>为了保证事务的顺序一致性，zookeeper采用了递增的事务id号（zxid）来标识事务。所有的提议（proposal）都在被提出的时候加上 了zxid。实现中zxid是一个64位的数字，它高32位是epoch用来标识leader关系是否改变，每次一个leader被选出来，它都会有一个 新的epoch，标识当前属于那个leader的统治时期。低32位用于递增计数。</p>
-<p>每个Server在工作过程中有三种状态：</p>
-<p>（1）LOOKING：当前Server不知道leader是谁，正在搜寻。<br>（2）LEADING：当前Server即为选举出来的leader。<br>（3）FOLLOWING：leader已经选举出来，当前Server与之同步。</p>
-<ul>
-<li><h2 id="选主流程"><a href="#选主流程" class="headerlink" title="选主流程"></a>选主流程</h2><p>当leader崩溃或者leader失去大多数的follower，这时候zk进入恢复模式，恢复模式需要重新选举出一个新的leader，让所有的 Server都恢复到一个正确的状态。<br>Zk的选举算法有两种：一种是基于basic paxos实现的，一种是基于fast paxos实现的。系统默认为fast paxos。<br>（1）Basic paxos：当前Server发起选举的线程,向所有Server发起询问,选举线程收到所有回复,计算zxid最大Server,并推荐此为leader，若此提议获得n/2+1票通过,此为leader，否则重复上述流程，直到leader选出。<br>（2）Fast paxos：某Server首先向所有Server提议自己要成为leader，当其它Server收到提议以后，解决epoch和 zxid的冲突，并接受对方的提议，然后向对方发送接受提议完成的消息，重复这个流程，最后一定能选举出Leader。(即提议方解决其他所有epoch和 zxid的冲突,即为leader)。</p>
-</li>
-<li><h2 id="同步流程"><a href="#同步流程" class="headerlink" title="同步流程"></a>同步流程</h2><p>（1）Leader等待server连接；<br>（2）Follower连接leader，将最大的zxid发送给leader；<br>（3）Leader根据follower的zxid确定同步点，完成同步后通知follower 已经成为uptodate状态；<br>（4）Follower收到uptodate消息后，又可以重新接受client的请求进行服务了。</p>
-</li>
-</ul>
+<a id="more"></a>
+
+<h2 id="sqlsession"><a href="#sqlsession" class="headerlink" title="sqlsession"></a>sqlsession</h2><p>sqlsession 是我们直接操作数据的入口，我们通过它来获取代理mapper，进而操作数据库，获取数据。其中包含了configuration、executor的引用，sqlsession 本身不做具体的事情，而是委托configuration、executor去做具体的操作。</p>
+<h2 id="configuration"><a href="#configuration" class="headerlink" title="configuration"></a>configuration</h2><p>configuration 是一个配置类，用它来做一些框架的配置，包括初始化所有 mapper 、statement。用它来真正的获取mapper、statement。</p>
+<h2 id="executor"><a href="#executor" class="headerlink" title="executor"></a>executor</h2><p>executor 主要用来数据库的连接、执行 crud 等操作。</p>
+<h2 id="proxy"><a href="#proxy" class="headerlink" title="proxy"></a>proxy</h2><p>proxy 主要用来生成代理mapper，我们不是通过真实的mapper接口去执行具体的业务，而主要是通过代理mapper去执行。</p>
+<p><strong>主要原理：</strong></p>
+<ol>
+<li>sqlssion 持有 configuration、executor 的引用，以及获取 mapper 代理、执行 crud 的外露接口，当然，获取 mapper 代理由configuration 去具体执行，crud 操作由 executor 去具体执行，sqlsession 只是一个主管，分配任务即可。</li>
+<li>configuration 在实例化时，会初始化且保存所有 mapper 代理，以及 statement（sql语句），并且外露一个获取 mapper 代理的接口、一个获取statement的接口给 sqlsession。（mapper代理的保存方式是一个map，key是真实的mapper接口，value是该接口的代理对象；statement 的保存方式是一个map，key是 mapper 接口的方法名，value是该方法的sql语句）</li>
+<li>executor 就是建立数据库连接，外露crud接口给 sqlsession，供其差遣。</li>
+<li>proxy 通过 sqlsession 委托 configuration 获取 statment ， 委托 executor 去执行 sql 语句获取结果。（我们知道 proxy 生成的代理对象必会走invoke方法，在invoke方法中，我们可以得到mapper具体执行的哪个方法，根据该方法名获取到statment，委托给configuration、sqlsession）。</li>
+</ol>
+<h1 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h1><h2 id="sqlsession-1"><a href="#sqlsession-1" class="headerlink" title="sqlsession"></a>sqlsession</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SqlSession</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ConfiguRation configuRation;</span><br><span class="line">    <span class="keyword">private</span> Executor executor;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SqlSession</span><span class="params">(ConfiguRation configuRation,Executor executor)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.configuRation = configuRation;</span><br><span class="line">        <span class="keyword">this</span>.executor = executor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  ConfiguRation <span class="title">getConfiguRation</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> configuRation;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">getMapper</span><span class="params">(Class&lt;T&gt; clazz)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> configuRation.getMapper(clazz,<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">selectByPrimaryKey</span><span class="params">(String statement, String parameter)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> executor.query(statement,parameter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="configuration-1"><a href="#configuration-1" class="headerlink" title="configuration"></a>configuration</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfiguRation</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Map&lt;Class&lt;?&gt; ,BatisProxyFactory&gt; mapperHouse = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, String&gt; mappedStatements = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConfiguRation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mapperHouse.put(UserMapper.class,<span class="keyword">new</span> BatisProxyFactory(UserMapper.class));</span><br><span class="line">        mappedStatements.put(<span class="string">"com.eaphy.handBatis.UserMapper.selectByPrimaryKey"</span></span><br><span class="line">                , <span class="string">"select * from t_user where id = %d"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containStatement</span><span class="params">(String statementName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mappedStatements.containsKey(statementName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMappedStatement</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mappedStatements.get(id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">getMapper</span><span class="params">(Class&lt;T&gt; clazz, SqlSession sqlSession)</span> </span>&#123;</span><br><span class="line">        BatisProxyFactory proxyFactory = mapperHouse.get(clazz);</span><br><span class="line">        <span class="keyword">if</span> (proxyFactory == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Type: "</span> + clazz + <span class="string">" can not find"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (T)proxyFactory.newInstance(sqlSession);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="executor-1"><a href="#executor-1" class="headerlink" title="executor"></a>executor</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Executor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">query</span><span class="params">(String statement, String parameter)</span> </span>&#123;</span><br><span class="line">        Connection conn = <span class="keyword">null</span>;</span><br><span class="line">        PreparedStatement preparedStatement = <span class="keyword">null</span>;</span><br><span class="line">        User user = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            conn = getConnection();</span><br><span class="line">            preparedStatement = conn.prepareStatement(String.format(statement, Integer.parseInt(parameter)));</span><br><span class="line">            preparedStatement.execute();</span><br><span class="line">            ResultSet rs = preparedStatement.getResultSet();</span><br><span class="line">            user = <span class="keyword">new</span> User();</span><br><span class="line">            <span class="keyword">while</span> (rs.next()) &#123;</span><br><span class="line">                user.setId(rs.getInt(<span class="number">1</span>));</span><br><span class="line">                user.setName(rs.getString(<span class="number">2</span>));</span><br><span class="line">                user.setPhone(rs.getString(<span class="number">3</span>));</span><br><span class="line">                user.setEmail(rs.getString(<span class="number">4</span>));</span><br><span class="line">                user.setQq(rs.getString(<span class="number">5</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                conn.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (T)user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        String driver = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">        String url = <span class="string">"jdbc:mysql://127.0.0.1:3306/eaphy?serverTimezone=UTC"</span>;</span><br><span class="line">        String username = <span class="string">"root"</span>;</span><br><span class="line">        String password = <span class="string">"123456"</span>;</span><br><span class="line">        Connection conn = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(driver);</span><br><span class="line">            conn = DriverManager.getConnection(url, username, password);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> conn;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="proxy-1"><a href="#proxy-1" class="headerlink" title="proxy"></a>proxy</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BatisProxy</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SqlSession sqlSession;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BatisProxy</span><span class="params">(SqlSession sqlSession)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.sqlSession = sqlSession;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sqlSession.getConfiguRation().containStatement(method.getDeclaringClass().getName()+<span class="string">"."</span>+method.getName())) &#123;</span><br><span class="line">            String sql = sqlSession.getConfiguRation().getMappedStatement(method.getDeclaringClass().getName()+<span class="string">"."</span>+method.getName());</span><br><span class="line">            <span class="keyword">return</span> sqlSession.selectByPrimaryKey(sql, args[<span class="number">0</span>].toString());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> method.invoke(proxy, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BatisProxyFactory</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Class&lt;T&gt; mapperInterface;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BatisProxyFactory</span><span class="params">(Class&lt;T&gt; mapperInterface)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mapperInterface = mapperInterface;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">newInstance</span><span class="params">(SqlSession sqlSession)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), <span class="keyword">new</span> Class[] &#123; mapperInterface &#125;, <span class="keyword">new</span> BatisProxy(sqlSession));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="mapper"><a href="#mapper" class="headerlink" title="mapper"></a>mapper</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line">    <span class="function">User <span class="title">selectByPrimaryKey</span><span class="params">(<span class="keyword">int</span> id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String phone;</span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line">    <span class="keyword">private</span> String qq;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SqlSession sqlSession = <span class="keyword">new</span> SqlSession(<span class="keyword">new</span> ConfiguRation(), <span class="keyword">new</span> Executor());</span><br><span class="line">        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);</span><br><span class="line">        User user = userMapper.selectByPrimaryKey(<span class="number">1</span>);</span><br><span class="line">        log.info(<span class="string">"用户信息：&#123;&#125;"</span>,user);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 执行结果 */</span></span><br><span class="line">用户信息：User(id=<span class="number">1</span>, name=张三<span class="number">12233</span>, phone=<span class="number">12345672233</span>, email=<span class="number">1234567</span><span class="meta">@qq</span>2233.com, qq=<span class="number">12345672233</span>)</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -544,7 +525,7 @@
         
         <div class="post-tags">
           
-            <a href="/tags/zookeeper/" rel="tag"><i class="fa fa-tag"></i> zookeeper</a>
+            <a href="/tags/mybatis/" rel="tag"><i class="fa fa-tag"></i> mybatis</a>
           
         </div>
       
@@ -557,8 +538,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/26/Hexo-Github-Next-搭建个人博客/" rel="next" title="Hexo+Github+Next 搭建个人博客">
-                <i class="fa fa-chevron-left"></i> Hexo+Github+Next 搭建个人博客
+              <a href="/2019/07/11/RabbitMQ-解析/" rel="next" title="RabbitMQ 解析">
+                <i class="fa fa-chevron-left"></i> RabbitMQ 解析
               </a>
             
           </div>
@@ -566,10 +547,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/28/线程池解析/" rel="prev" title="Java 线程池解析">
-                Java 线程池解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -772,7 +749,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-简介"><span class="nav-number">1.</span> <span class="nav-text">zookeeper 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-作用"><span class="nav-number">2.</span> <span class="nav-text">zookeeper 作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-结构"><span class="nav-number">3.</span> <span class="nav-text">zookeeper 结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Znode："><span class="nav-number">3.1.</span> <span class="nav-text">Znode：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#会话：-Session"><span class="nav-number">3.2.</span> <span class="nav-text">会话：(Session)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本："><span class="nav-number">3.3.</span> <span class="nav-text">版本：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#watcher："><span class="nav-number">3.4.</span> <span class="nav-text">watcher：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACL："><span class="nav-number">3.5.</span> <span class="nav-text">ACL：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-特点"><span class="nav-number">4.</span> <span class="nav-text">zookeeper 特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-角色"><span class="nav-number">5.</span> <span class="nav-text">zookeeper 角色</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper-原理"><span class="nav-number">6.</span> <span class="nav-text">zookeeper 原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#选主流程"><span class="nav-number">6.1.</span> <span class="nav-text">选主流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步流程"><span class="nav-number">6.2.</span> <span class="nav-text">同步流程</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#架构组成"><span class="nav-number">1.</span> <span class="nav-text">架构组成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sqlsession"><span class="nav-number">1.1.</span> <span class="nav-text">sqlsession</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#configuration"><span class="nav-number">1.2.</span> <span class="nav-text">configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#executor"><span class="nav-number">1.3.</span> <span class="nav-text">executor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy"><span class="nav-number">1.4.</span> <span class="nav-text">proxy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#核心代码"><span class="nav-number">2.</span> <span class="nav-text">核心代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sqlsession-1"><span class="nav-number">2.1.</span> <span class="nav-text">sqlsession</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#configuration-1"><span class="nav-number">2.2.</span> <span class="nav-text">configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#executor-1"><span class="nav-number">2.3.</span> <span class="nav-text">executor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy-1"><span class="nav-number">2.4.</span> <span class="nav-text">proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapper"><span class="nav-number">2.5.</span> <span class="nav-text">mapper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test"><span class="nav-number">2.6.</span> <span class="nav-text">Test</span></a></li></ol></li></ol></div>
             
 
           </div>
