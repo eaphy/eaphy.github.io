@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://yoursite.com/img/loading.gif">
 <meta property="og:image" content="http://yoursite.com/img/loading.gif">
 <meta property="og:image" content="http://yoursite.com/img/loading.gif">
-<meta property="og:updated_time" content="2019-07-10T16:20:51.342Z">
+<meta property="og:updated_time" content="2019-07-23T05:31:43.179Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql 解析">
 <meta name="twitter:description" content="索引是什么索引是为了加快对表中数据行的检索而创建的一种分散存储的数据结构。 为什么用索引 索引能极大的减少存储引擎需要扫面的数据量 索引可以把随机IO变成顺序IO 索引可以帮助我们在进行分组、排序等操作时，避免使用临时表">
@@ -496,7 +496,16 @@
 <h2 id="加强版多路平衡二叉查找树（B-Tree）"><a href="#加强版多路平衡二叉查找树（B-Tree）" class="headerlink" title="加强版多路平衡二叉查找树（B+ Tree）"></a>加强版多路平衡二叉查找树（B+ Tree）</h2><img src="/img/loading.gif" data-original="/img/19071004.png" style="width: 640px; height: 400px!important; " align="center/">
 
 
-
+<h1 id="索引的重要知识"><a href="#索引的重要知识" class="headerlink" title="索引的重要知识"></a>索引的重要知识</h1><h2 id="列的离散性"><a href="#列的离散性" class="headerlink" title="列的离散性"></a>列的离散性</h2><p>列的离散性 = count（distinct col）/ count(col) ,值越大，离散性越好，选择性越高。</p>
+<h2 id="最左匹配原则"><a href="#最左匹配原则" class="headerlink" title="最左匹配原则"></a>最左匹配原则</h2><p>对索引中的关键字进行比对，一定是按照从左往右进行，且不可跳过。</p>
+<h2 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h2><p>联合索引列选择原则：</p>
+<ol>
+<li>经常用的列优先（最左匹配）</li>
+<li>离散性高的列优先（离散高原则）</li>
+<li>宽度小的列优先（最少空间原则）</li>
+</ol>
+<h2 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h2><p>如果查询列可通过索引节点中的关键字直接返回，则该索引称之为覆盖索引。覆盖索引可以减少数据库的IO ，将随机IO变为顺序IO，可提高查询性能。</p>
+<p>ps：<br>索引列：（name+phone）<br>查询语句：select name,phone from user where name = ? ;</p>
 
       
     </div>
@@ -753,7 +762,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#索引是什么"><span class="nav-number">1.</span> <span class="nav-text">索引是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么用索引"><span class="nav-number">2.</span> <span class="nav-text">为什么用索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么是-B-Tree"><span class="nav-number">3.</span> <span class="nav-text">为什么是 B+Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">3.1.</span> <span class="nav-text">二叉查找树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平衡二叉查找树"><span class="nav-number">3.2.</span> <span class="nav-text">平衡二叉查找树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多路平衡二叉查找树（B-Tree）"><span class="nav-number">3.3.</span> <span class="nav-text">多路平衡二叉查找树（B Tree）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加强版多路平衡二叉查找树（B-Tree）"><span class="nav-number">3.4.</span> <span class="nav-text">加强版多路平衡二叉查找树（B+ Tree）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#索引是什么"><span class="nav-number">1.</span> <span class="nav-text">索引是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么用索引"><span class="nav-number">2.</span> <span class="nav-text">为什么用索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么是-B-Tree"><span class="nav-number">3.</span> <span class="nav-text">为什么是 B+Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">3.1.</span> <span class="nav-text">二叉查找树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平衡二叉查找树"><span class="nav-number">3.2.</span> <span class="nav-text">平衡二叉查找树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多路平衡二叉查找树（B-Tree）"><span class="nav-number">3.3.</span> <span class="nav-text">多路平衡二叉查找树（B Tree）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加强版多路平衡二叉查找树（B-Tree）"><span class="nav-number">3.4.</span> <span class="nav-text">加强版多路平衡二叉查找树（B+ Tree）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引的重要知识"><span class="nav-number">4.</span> <span class="nav-text">索引的重要知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#列的离散性"><span class="nav-number">4.1.</span> <span class="nav-text">列的离散性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最左匹配原则"><span class="nav-number">4.2.</span> <span class="nav-text">最左匹配原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联合索引"><span class="nav-number">4.3.</span> <span class="nav-text">联合索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖索引"><span class="nav-number">4.4.</span> <span class="nav-text">覆盖索引</span></a></li></ol></li></ol></div>
             
 
           </div>
