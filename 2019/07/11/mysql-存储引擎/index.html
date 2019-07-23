@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
 <meta property="og:description" content="介绍 可插拔的插件方式 存储引擎是指定在表之上的，每个表可以指定专用的存储引擎 不管采用什么存储引擎，都会在数据区产生对应的一个frm文件（表结构定义描述文件）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-11T05:31:31.704Z">
+<meta property="og:updated_time" content="2019-07-23T05:17:27.787Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql 存储引擎">
 <meta name="twitter:description" content="介绍 可插拔的插件方式 存储引擎是指定在表之上的，每个表可以指定专用的存储引擎 不管采用什么存储引擎，都会在数据区产生对应的一个frm文件（表结构定义描述文件）">
@@ -511,10 +511,15 @@
 <h1 id="Myisam-存储引擎"><a href="#Myisam-存储引擎" class="headerlink" title="Myisam 存储引擎"></a>Myisam 存储引擎</h1><p>mysql 5.5 之前默认的存储引擎，较多的系统表也还是用这个引擎，系统临时表也会用到该引擎。</p>
 <p><strong>特点：</strong></p>
 <ol>
-<li>select count(*) from table 无需进行数据的扫描</li>
-<li>数据（MYD）和索引（MYI）分开存储</li>
-<li>表级锁</li>
-<li>不支持事务</li>
+<li><p>select count(*) from table 无需进行数据的扫描</p>
+</li>
+<li><p>数据（MYD）和索引（MYI）分开存储</p>
+</li>
+<li><p>表级锁</p>
+</li>
+<li><p>不支持事务</p>
+<p>索引与数据分开存储，不管以什么字段建立索引，都会存储数据的一个地址的指针，根据该指针找到数据。</p>
+</li>
 </ol>
 <h1 id="Innodb-存储引擎"><a href="#Innodb-存储引擎" class="headerlink" title="Innodb 存储引擎"></a>Innodb 存储引擎</h1><p>mysql 5.5 之后默认的存储引擎。</p>
 <p><strong>特点：</strong></p>
@@ -524,6 +529,7 @@
 <li>聚集索引（主键索引）的方式进行数据存储</li>
 <li>支持外键</li>
 </ol>
+<p>以主键为索引来组织数据的存储，在叶子节点存储了该条数据的所有数据，如果其他字段做索引，会在该字段索引的叶子节点存储主键索引的值，再根据该值在主键索引种找到数据。如果没有明确指定主键索引，会自动生成 6 byte的 int 主键索引。</p>
 
       
     </div>
