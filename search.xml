@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[面试突击-架构篇]]></title>
+    <url>%2F2019%2F08%2F26%2F%E9%9D%A2%E8%AF%95%E7%AA%81%E5%87%BB-%E6%9E%B6%E6%9E%84%E7%AF%87%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>面试相关</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[面试突击-算法篇]]></title>
+    <url>%2F2019%2F08%2F26%2F%E9%9D%A2%E8%AF%95%E7%AA%81%E5%87%BB-%E7%AE%97%E6%B3%95%E7%AF%87%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>面试相关</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[面试突击-中间件篇]]></title>
+    <url>%2F2019%2F08%2F26%2F%E9%9D%A2%E8%AF%95%E7%AA%81%E5%87%BB-%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%AF%87%2F</url>
+    <content type="text"><![CDATA[MQ 如何保证消息幂等性避免生产者重发消息基于mq的本身特性，对每条消息，mq系统内部会生成一个inner-msg-id，全局唯一，与业务无关；当mq接收到消息时，会先根据该id判断消息是否重复发送，进而决定是否接收该消息。 避免消费者重复消费1、乐观锁，修改数据时，判断version值是否变化，变化的就直接丢弃消息。2、去重表，可以使用业务中有唯一属性的字段，也可以自己生成一个全局唯一id，每消费一个消息，将其唯一属性存入redis，下次消费消息时，先查redis里面是否有此数据，有的话就直接丢弃消息。 未完待续……]]></content>
+      <categories>
+        <category>面试相关</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[面试突击-数据库篇]]></title>
+    <url>%2F2019%2F08%2F26%2F%E9%9D%A2%E8%AF%95%E7%AA%81%E5%87%BB-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AF%87%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>面试相关</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[面试突击-基础篇]]></title>
+    <url>%2F2019%2F08%2F26%2F%E9%9D%A2%E8%AF%95%E7%AA%81%E5%87%BB-%E5%9F%BA%E7%A1%80%E7%AF%87%2F</url>
+    <content type="text"><![CDATA[HashMap 原理存储结构数组+链表+红黑树，链表的存在是为了解决hash冲突，当链表长度大于8的时候，后面的数据存放在红黑树中。 特点 快速存储 快速查找（时间复杂度为o(1)） 可伸缩 线程不安全 数组下标计算数组默认大小为：16数组下标： hash &amp; （16-1） = hash % 16 扩容初始容量16，最大容量2的30次方，加载因子系数为 0.75，即容量达到四分之三时，开始扩容，扩容增量为原容量的一倍，即一次扩容后容量为32 操作流程put 操作： 首先判断key是否为null，若为null，直接插入数组第一个位置，数组原来有的数据，下标依次后移加一 若key不为null，计算key的hash值，取数组长度的模，得到其应该存储的数组位置 若该位置无值，直接插入 若该位置有值，判断链表中是否有key一样，有一样的话，覆盖原值，无一样的话，保存在链头 get 操作： 判断key是否为null，若为null，直接返回null的值 若key不为null，根据key的hash值，确定数组位置 遍历链表，返回key的hash值相同，且key一样的value 未完待续……]]></content>
+      <categories>
+        <category>面试相关</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Redis 原理解析]]></title>
     <url>%2F2019%2F07%2F29%2FRedis-%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%2F</url>
     <content type="text"><![CDATA[数据类型Stringstring 类型通过int、sds作为数据结构，int用来存储整型数据，sds存放字节、字符串、浮点型数据。redis3.2分支引入了五种sdshdr类型，目的是为了满足不同长度字符串可以使用不同大小的Header，从而节省内存，每次在创建一个sds时根据sds的实际长度判断应该选择什么类型的sdshdr。 Listlist 可以存储一个有序的字符串列表，常用的操作是向列表两端添加元素。 redis3.2之前，List类型的value对象内部以linkedlist或者ziplist来实现, 当list的元素个数和单个元素的长度比较小 的时候，Redis会采用ziplist（压缩列表）来实现来减少内存占用。否则就会采用linkedlist（双向链表）结构。 redis3.2之后，采用的一种叫quicklist的数据结构来存储list，列表的底层都由quicklist实现。 这两种存储方式都有优缺点，双向链表在链表两端进行push和pop操作，在插入节点上复杂度比较低，但是内存开 销比较大； ziplist存储在一段连续的内存上，所以存储效率很高，但是插入和删除都需要频繁申请和释放内存； quicklist仍然是一个双向链表，只是列表的每个节点都是一个ziplist，其实就是linkedlist和ziplist的结合，quicklist 中每个节点ziplist都能够存储多个数据元素 Hashmap提供两种结构来存储，一种是hashtable、另一种是前面讲的ziplist，数据量小的时候用ziplist. SetSet在的底层数据结构以intset或者hashtable来存储。当set中只包含整数型的元素时，采用intset来存储，否则， 采用hashtable存储，但是对于set来说，该hashtable的value值用于为NULL。通过key来存储元素 。 Sorted-Set在集合类型的基础上，有序集合类型为集合中的每个元素都关联了一个分数，这使得我们不仅可以完成插入、删除 和判断元素是否存在等集合类型支持的操作，还能获得分数最高(或最低)的前N个元素、获得指定分数范围内的元 素等与分数有关的操作。虽然集合中每个元素都是不同的，但是他们的分数却可以相同 zset类型的数据结构就比较复杂一点，内部是以ziplist或者skiplist+hashtable来实现，这里面最核心的一个结构就 是skiplist，也就是跳跃表 过期删除原理 周期性随机抽取20个设置了过期时间的key，判断是否过期，过期则删除。 get 时，判断key是否过期，过期则删除。 持久化RDB当符合条件时，fork子进程生成一个dump.rdb的快照文件。有可能丢失数据条件1：修改配置文件： 123save 900 1 //900s之内有一个key发生改变，触发快照save 300 10 //300s之内有10个key发生改变，触发快照save 60 10000 //60s之内有10000个key发生改变，触发快照 条件2：执行 save 命令 （阻塞所有请求），触发快照执行 bgsave 命令 （不会阻塞请求），触发快照 条件3：执行命令 flushall，触发快照 条件4:主从复制时，触发快照 AOF在aof文件中保存增删改的的操作指令。当aof文件过大时，可以进行压缩，把内存中的数据生成一个临时的aof文件，然后覆盖原文件。 内存回收策略no-enviction：内存不足时，报错 allkeys-lru：挑选最近最少使用的数据淘汰 allkeys-random：随机选择数据淘汰 volatile-lru：从已设置过期时间的数据中挑选最近最少使用的数据淘汰 volatile-ttl：从已设置过期时间的数据中挑选将要过期的数据淘汰 volatile-random：从已设置过期时间的数据中随机选择数据淘汰]]></content>
@@ -115,20 +170,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[面试突击]]></title>
-    <url>%2F2019%2F07%2F04%2F%E9%9D%A2%E8%AF%95%E7%AA%81%E5%87%BB%2F</url>
-    <content type="text"><![CDATA[HashMap 原理存储结构数组+链表+红黑树，链表的存在是为了解决hash冲突，当链表长度大于8的时候，后面的数据存放在红黑树中。 特点 快速存储 快速查找（时间复杂度为o(1)） 可伸缩 线程不安全 数组下标计算数组默认大小为：16数组下标： hash &amp; （16-1） = hash % 16 扩容初始容量16，最大容量2的30次方，加载因子系数为 0.75，即容量达到四分之三时，开始扩容，扩容增量为原容量的一倍，即一次扩容后容量为32 操作流程put 操作： 首先判断key是否为null，若为null，直接插入数组第一个位置，数组原来有的数据，下标依次后移加一 若key不为null，计算key的hash值，取数组长度的模，得到其应该存储的数组位置 若该位置无值，直接插入 若该位置有值，判断链表中是否有key一样，有一样的话，覆盖原值，无一样的话，保存在链头 get 操作： 判断key是否为null，若为null，直接返回null的值 若key不为null，根据key的hash值，确定数组位置 遍历链表，返回key的hash值相同，且key一样的value MQ 如何保证消息幂等性避免生产者重发消息基于mq的本身特性，对每条消息，mq系统内部会生成一个inner-msg-id，全局唯一，与业务无关；当mq接收到消息时，会先根据该id判断消息是否重复发送，进而决定是否接收该消息。 避免消费者重复消费1、乐观锁，修改数据时，判断version值是否变化，变化的就直接丢弃消息。2、去重表，可以使用业务中有唯一属性的字段，也可以自己生成一个全局唯一id，每消费一个消息，将其唯一属性存入redis，下次消费消息时，先查redis里面是否有此数据，有的话就直接丢弃消息。 未完待续……]]></content>
-      <categories>
-        <category>面试相关</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[魔镜心灵]]></title>
     <url>%2F2019%2F06%2F29%2F%E9%AD%94%E9%95%9C%E5%BF%83%E7%81%B5%2F</url>
-    <content type="text"><![CDATA[执意要看，请输入暗号 ！ Incorrect Password! No content to display! U2FsdGVkX1+96KwxRONSwIwSyMZ/ooVF1yVjegdB9tvRictTVmHVJW6Nu347ExpVROW2mT/EZeh9agBzUqeM2sFjsT2mSjUpisPPolYs4YEkIyBmMrqmTeFULLH7LqBb9YJB9DyLEmqMGQ42g4hC4fi7ANj7eJO/XnEuV7daiC8NjRZlr6q5mazgleHz8KqO+Ibo9U/lT58OM2giOhI5ewV9R/q2tSuj1KR+xDWIqs4SavLUq5Ib+xd1UFcXtFsjc3j+fmcGhPLm53qQDJxtCBpNsSIryH/Vuph0L6eRoV83HV0ovVZrHn87V0QjJcRUHnG2daNvcoYEzRu8Rw8nEYIBfod4sGrrtqS7PGuelO2oAFO4JaDGn+fFf5x35wd9FX72kuzUbVrdxSMjiuF354VVQkfTvl63BKVYoPK5zao4hOwyDneUj8LVUjPSJ+DMlqR8UbZ2i7NvaOmEO6rTZkvY8LIS/z+Hxs6Y8dojlWWq4GI9t3tppVrte/FwjBd+LfdXRrfjgc5WXDvIoBCdZdjtitW0BKfa6pmKsVWv/GYhjEv1gGsfTzfuJb8mFAGVAueZnmYmpaIbTk8obP+yjeuOU+gKC/RrHnTOTf2mCJ0hSeqYOBnNI4NFNbu1Pv2G5NIi9vqmfdcWcJpgU3NDYm6/I11BhbZvk5YMzQbILJZqUCLFOme6Kzo66YKfByT4Q1yeql2ajFm+h+SfxRIkRqILEFo6jKz8axBq2eVRy11tAoM1r9Ko3v4lV+CMNKvL7ZcIglL2yh9tBQ3vY2MNUSgwZpbWtjaJGlVHPZPK1zO8G5HcgdORFu6qH67rfDdxTS+7qhpC2L/spdF3YpYiU2NfTMSm66gznGiyHgbpFKuFPmgOQQfuET1EU8YXBOIHt/Gw/DYHH7VjN3h0fZk1+4WYr9GW6Nc28UcrewdB1DhbQarfn6ekVyuW48LMGSa5i+adNAsEGim9Qw8UlJdE3swviYaN58gu8tp93NZG7RuM+GY4406IFrzMXEmpumoAIXOklLjx90DpADq/9sopzFCjtca+QMWnMCBMegeSJHMZdVzVx5uDjAFNnG70Or25RO7eU9opiZAWqf2Ueb2GgUiYkaes1byXAMGxZCNBobHXtyWwCWm57+x/p5uB39QBBpKWfJhYagm0kc753zH3RD6b5aloWi1U4Z0iIAJyiky8pDiHYzQTMB4UJ0a/XNVXj4ZmwYCQIFg123rUP4EhG5hxYQj35a0BbefnEtV/B5F0BvGpvcqMrRuNibwymP7uqaP2u20m2vsCQ8tkeKxTxEcFyiT7fpp/GVikyjj2Q2ni+Mk+DEXfEUZtVn8kgDlBg+ulOJK7rMIz4GwNRrMIzTovlfeeBHLRhfyQiFowhLj3jum0kAFDkqEKZiGE2PSW197tNUJKlP0aB6Tb1gg6ey90olNT0hzI/vSLU0knk4sDp5iWM1xUFdE2lluT01BNXh5J0QW5ZYoKxyb6nDSH4GbEXerixd4zdbx6L5MAt4iSOM6vwb+dkN0bOIYhvIDr8vkB4JWcfRTmYJ62QZiPclsLu/3irLIwVLOG6emzihmSTe4aDYTz5aG8G9yYsWRlr1p5wNuZ/GuOgQxvhy1VQIXZePlWokvk7/xL0yQn7k8z6u3pGMFuhqlknI86UE08nxne161vtxCHrIJR8IkBXi0P7kjMIPzdwTWt2gCGmLswhqaeC5Ncw4ej/rZ6oL/FVARMfFPxbiidhmchkuLDEoIGrSMIX+AC9ZSYKjCj8R9fD/Qc/T1QpmKn0iVV30UmhjOCDMN127kd+BErLZes4+8SZWO4TdAaq19FltJ8L//nz3qC7bVjxvJGcuksog91JPsuyc2gYire1VTmbbAy6DI4cvB1Bd+izblnys+KNDpBELQq67C1xhZF5cG0UVFncbIcD9TRVKpP7DcTfBfM/VOkvQdjLZwPn/f2qkT3G4qemcM8uz2/kjVNTDABLTqG]]></content>
+    <content type="text"><![CDATA[执意要看，请输入暗号 ！ Incorrect Password! No content to display! U2FsdGVkX1+36np9ukxWwCzOmDWOMYbp7rL1NZJxDrG4tD+riEp4Qm1cMvQHwNoz+KmkvEIwyQI8SWDB4jc3bZGb475B4vFDarsHbS/MjbTLyLY9jaQTMW2M1NHU6EJFrYmck/5NRQ0bLfzcj568ugsyK9VRRNqttDqSlysAYgila2+jaUoZiCZbKECeaN6mxYtZgtMu6NlyDnsc7H2HiPGH/elN2k2EZlUawBKBGGie3Wq+WVrn/evDGmRT3ZhZHighO8nv+MepP1cuu3lSvDw7RgxQ+KfqchNTpL8RdMy8w+Uejk+riNu4SglWT+oC5Lk6aXX7uHZoGjAsB+k3o7jXOh8updZfywIXH/SmVEhrGeNyG7JrYPVHJdCAdEhTZQRNXTmGey7KaZO8YeVvGKL8RZCxgGLDo4MCsEbf26ZRw5XPJDkatVYnvn4b5ofTPiJul9poN1NZeq4PUc1PFurcWJyRVowlwrabjLVwIXyAPdF88SnjHSSNeN2V8upwMWizSDS9pLMFnEoLdF7yNTbXAiWC4ZCdL+jE7ZyoDGePj7EEJiTwg9rvwzBfdRXsmAZrLPiSKf7b5nf/YYFBYI3iCMqna5NYizZoQFgq8uFuOmGXHs6vto5BErbV0uJ6VL4IWqf++dVrHG3Lu7ry1YBx/cX9w64v1OZoEn2tVPVZfuWE9Myt4GM12WDUrZCfbTfDtYWU8unufq0Olme8kCU04yfkUbVfLVdR2cIVEf4UcPEuy7yjIcP8KBzEmf4nSrXRTEMRVjms/E1PPnYhHqcba6SDvXpYVsYcSpPBrDKE0rX0GDA7QWtlIqgFKdQ0xc7Nap5FPBKTu0lPQMGk5SER3xK91ziYYvgcl6XqAa0KZYdQwTaAZ67lKeA1eS6SUSkpqLFhAv8SsIdlgzI9KugE2VwM//HiU1lkXhFI3b1jmtvzODLedmuN6eoihxYa/BTpjkkSTI5GPLmgJb+UUSIMRRqHvNgtAOrJjBBErx5DkejGBO7TxUz0WCps0wajvf9AVxGHsk7PFmvN8CzVOAbe2GmalTsb2Dqhmt3mU5DWYI+e8F1/Q7VEg7fS2xmvIw9jm8HqwsQ5SVE1VPUF7bGpOF0YhfN3W9BjiRvTJ+TUqXSS4QgaXlXJ5402T2sv0uHEYXtFHPDT/bf9yFpchxoFnK48QLmrsHHnHDoXMJKHjuCM8jHIZdqRCtbhFmBfTWe9g1yaqgJmOIkMsUI09cXh0pDUYfImPMDUIVBsB6pn7XdNneELYfFVodBHNfvG9gWyIOXIAW5iC9c68XgZm6j0AjSRvBMH78KruSR0hAXxDd1RteblGpMBM0kcTfOC2RejleI0Pa+H9R92P5cgLTZKPA3JwWDwJSsxaPL//NgPjp2phnxd6sGtR7l3LmZ97VQHpuPhj3lX56N+MhQMiycRyS+uYVnQDu1Q+MVybhuKjJBMOFAvMpQ72LDc/T3auJoxNoClO4fa0MYyHVJxzNb0MG9RdqSl1Thw2FjZPC1oRIp8FcCg9EQikN5vHt1aij3SewBCuTKEQ9mFr+8syPFjLbITR0ZId2K8KMrfjbiX6BjY4kzBGtLZkWEQaYg70z3phMpMDxXozt9gJHUDj/dQuVC/+UPNwLmKzO3t0JG8PfjF9DMU1zFv5Cmi9NgcMhdFWyW0qvvs4l2S+JPz/Rixpu648VMKdDhhc1k64yif4iYJAFFrut8cfSr46+FwXoBIAyhY/9dBwMfioyoSNCr+mMOvi53fVegCcK21kTqCNIRBJ23wdRW18LlkpfeOdxQ6Yjtd8/z3f48kUF8mus/OdQ8jgyD2cobfXUF3aUsA+qLCp74UkMolURPmsOJSXlhs4QQVU4eZUJFDRAQEYCgxi4xHiTRKxbjBtwwqEUIDKrpzzycuY5XMTKNwcLx8dMRM71wzxXQOYIsMDtzqsAma1/5EMASOLQ9cYMe3+rYMioUjGGT6LtIcpI6eUgLh]]></content>
       <categories>
         <category>生活随笔</category>
       </categories>
