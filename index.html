@@ -1113,9 +1113,17 @@
 
       
         
+          <h1 id="缓存更新策略"><a href="#缓存更新策略" class="headerlink" title="缓存更新策略"></a>缓存更新策略</h1><h2 id="先更新数据库，再更新缓存"><a href="#先更新数据库，再更新缓存" class="headerlink" title="先更新数据库，再更新缓存"></a>先更新数据库，再更新缓存</h2><p>缺点：<br>1）、线程安全角度，同时有请求A和请求B进行更新操作，那么会出现<br>a.线程A更新了数据库<br>b.线程B更新了数据库<br>c.线程B更新了缓存<br>d.线程A更新了缓存</p>
+<p>这就出现请求A更新缓存应该比请求B更新缓存早才对，但是因为网络等原因，B却比A更早更新了缓存。这就导致了脏数据，因此不考虑。</p>
+          <!--noindex-->
           
-            <a id="more"></a>
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/08/26/面试突击-数据库篇/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
           
+          <!--/noindex-->
         
       
     </div>
