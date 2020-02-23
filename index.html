@@ -949,9 +949,16 @@
 
       
         
+          <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#添加数据</span><br><span class="line">PUT /eaphy/student/<span class="number">1</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"id"</span>:<span class="number">1</span>,</span><br><span class="line">  <span class="string">"age"</span>:<span class="number">11</span>,</span><br><span class="line">  <span class="string">"name"</span>:<span class="string">"小米"</span>,</span><br><span class="line">  <span class="string">"city"</span>:<span class="string">"北京"</span>,</span><br><span class="line">  <span class="string">"desc"</span>:<span class="string">"我是一个北京人"</span></span><br><span class="line">&#125;</span><br><span class="line">PUT /eaphy/student/<span class="number">2</span> </span><br><span class="line">&#123;<span class="string">"id"</span>:<span class="number">2</span>,<span class="string">"age"</span>:<span class="number">12</span>,<span class="string">"city"</span>:<span class="string">"南京"</span>,<span class="string">"name"</span>:<span class="string">"小明"</span>,<span class="string">"desc"</span>:<span class="string">"我是一个南京人"</span>&#125;</span><br><span class="line"></span><br><span class="line">PUT /eaphy/student/<span class="number">3</span></span><br><span class="line">&#123;<span class="string">"id"</span>:<span class="number">3</span>,<span class="string">"age"</span>:<span class="number">13</span>,<span class="string">"city"</span>:<span class="string">"上海"</span>,<span class="string">"name"</span>:<span class="string">"张三"</span>,<span class="string">"desc"</span>:<span class="string">"我是一个上海人"</span>&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
           
-            <a id="more"></a>
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/09/12/es-常用查询语句/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
           
+          <!--/noindex-->
         
       
     </div>
@@ -1106,9 +1113,22 @@
 
       
         
+          <h2 id="一、shard"><a href="#一、shard" class="headerlink" title="一、shard"></a>一、shard</h2><ol>
+<li>es 中的 shard 分为 primary shard 和 replica shard，后者是前者的副本，负责容错，承担读请求</li>
+<li>每个 shard 都可以独立完成创建索引，处理请求，是一个最小工作单元</li>
+<li>每个 document 只会存在一个 primary shard 和 其对应的 replica shard 中</li>
+<li>primary shard  在索引创建时固定，默认为 5，创建后不可修改， replica shard ，默认为1，可以修改</li>
+<li>一个 index 包含多个 shard</li>
+</ol>
+          <!--noindex-->
           
-            <a id="more"></a>
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/09/01/Elasticsearch-解析/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
           
+          <!--/noindex-->
         
       
     </div>
