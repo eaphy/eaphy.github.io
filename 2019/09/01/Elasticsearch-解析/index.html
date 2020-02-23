@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
 <meta property="og:description" content="一、shard es 中的 shard 分为 primary shard 和 replica shard，后者是前者的副本，负责容错，承担读请求 每个 shard 都可以独立完成创建索引，处理请求，是一个最小工作单元 每个 document 只会存在一个 primary shard 和 其对应的 replica shard 中 primary shard  在索引创建时固定，默认为 5，创建后不可">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-23T09:45:10.755Z">
+<meta property="og:updated_time" content="2020-02-23T11:27:24.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elasticsearch 解析">
 <meta name="twitter:description" content="一、shard es 中的 shard 分为 primary shard 和 replica shard，后者是前者的副本，负责容错，承担读请求 每个 shard 都可以独立完成创建索引，处理请求，是一个最小工作单元 每个 document 只会存在一个 primary shard 和 其对应的 replica shard 中 primary shard  在索引创建时固定，默认为 5，创建后不可">
@@ -480,6 +480,18 @@
 <li>新的mater会将丢失的 primary shard  的某个 replica shard 提升为primary shard ，status 变黄，因为少一个 replica shard </li>
 <li>重启宕机的 node ，新的master会将宕机后缺失的数据复制到该node上，原来的数据正常使用，status 变绿</li>
 </ol>
+<h2 id="三、全量替换、部分更新"><a href="#三、全量替换、部分更新" class="headerlink" title="三、全量替换、部分更新"></a>三、全量替换、部分更新</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">PUT /eaphy/student/<span class="number">1</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"id"</span>:<span class="number">1</span>,</span><br><span class="line">  <span class="string">"age"</span>:<span class="number">11</span>,</span><br><span class="line">  <span class="string">"name"</span>:<span class="string">"小花"</span>,</span><br><span class="line">  <span class="string">"city"</span>:<span class="string">"北京"</span>,</span><br><span class="line">  <span class="string">"desc"</span>:<span class="string">"我是一个北京人"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">POST /eaphy/student/<span class="number">1</span>/_update</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"doc"</span>: &#123;</span><br><span class="line">    <span class="string">"age"</span>:<span class="number">11</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1.全量替换是先查询到document，修改信息，把信息全部发送到后台，后台发送put请求，进行全量替换，再把老的document标记为deleted，然后创建一个新的document<br>2.部分更新是先查询到document，将更新的数据更新到document中，再把老的document标记为deleted，然后创建一个新的document，这个过程是在一个shard中完成的<br>3.部分更新，减少了网络请求，减少了并发冲突。</p>
+<h2 id="四、document-路由"><a href="#四、document-路由" class="headerlink" title="四、document 路由"></a>四、document 路由</h2><p>一个index存在多个shard中，当一个document传进来时，其路由到某个具体shard的算法是： shard = hash(routing num) % number_of_primary_shards</p>
+<p>ps: 一个index有3个primary shard，每增删改查一个document时，会带过来一个routing num，默认是 document 的 id，然后求出hash值，与 3 求余，得到其应该定位到哪个shard中。</p>
+<p>这就是 primary shard 数量不可修改的原因，会导致路由错误。</p>
+<h2 id="五、写一致性、quorum-机制"><a href="#五、写一致性、quorum-机制" class="headerlink" title="五、写一致性、quorum 机制"></a>五、写一致性、quorum 机制</h2><p>我们在发送一个增删改操作时，可以带上一个consistency参数，指明我们想要的写一致性是什么。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">put index/<span class="built_in">type</span>/id?consistency=one</span><br><span class="line">put index/<span class="built_in">type</span>/id?consistency=all</span><br><span class="line">put index/<span class="built_in">type</span>/id?consistency=quorum</span><br></pre></td></tr></table></figure>
+
+<p>one: 只要有一个primary shard 是活跃的就可以执行<br>all： 必须所有 primary shard 和 replica shard是活跃的，才可执行<br>quorum：必须大部分shard是活跃的，才能执行</p>
+<p>quorum = int（（primary_num+replica_num）/ 2）+1，当replica_num&gt;1时生效<br>ps: 3 个primary shard ，1个 replica shard ，共 3+3*1=6，那么 quorum = int((3+1)/2)+1 = 3 ,即要求6个shard中，至少3个shard活跃才能执行</p>
+<p>quorum 不齐全时，默认会等待1分钟，也可以自己加参数 timeout 去设定</p>
 
       
     </div>
@@ -744,7 +756,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、shard"><span class="nav-number">1.</span> <span class="nav-text">一、shard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、扩容、容错"><span class="nav-number">2.</span> <span class="nav-text">二、扩容、容错</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、shard"><span class="nav-number">1.</span> <span class="nav-text">一、shard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、扩容、容错"><span class="nav-number">2.</span> <span class="nav-text">二、扩容、容错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、全量替换、部分更新"><span class="nav-number">3.</span> <span class="nav-text">三、全量替换、部分更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、document-路由"><span class="nav-number">4.</span> <span class="nav-text">四、document 路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、写一致性、quorum-机制"><span class="nav-number">5.</span> <span class="nav-text">五、写一致性、quorum 机制</span></a></li></ol></div>
             
 
           </div>
