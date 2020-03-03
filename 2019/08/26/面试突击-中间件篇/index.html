@@ -94,18 +94,18 @@
 
 
 
-  <meta name="description" content="MQ 如何保证消息幂等性避免生产者重发消息基于mq的本身特性，对每条消息，mq系统内部会生成一个inner-msg-id，全局唯一，与业务无关；当mq接收到消息时，会先根据该id判断消息是否重复发送，进而决定是否接收该消息。 避免消费者重复消费1、乐观锁，修改数据时，判断version值是否变化，变化的就直接丢弃消息。2、去重表，可以使用业务中有唯一属性的字段，也可以自己生成一个全局唯一id，每消">
+  <meta name="description" content="为什么使用MQ （优缺点）优点1.解耦一个系统可能有abcd四个模块，a 模块是核心模块，bcd 都需要从 a 获取数据，那么就需要在 a 模块写3个接口给bcd传输数据，这样的话，不管是模块增减，还是数据有变，都需要在a模块修改代码，强耦合。此时 ，mq 可以解耦，a 把数据发送到mq，bcd 自行订阅消费即可。 2.异步一个接口可能调用多个模块的接口，耗时较大。通过 mq ，可以让各个模块自行">
 <meta name="keywords" content="面试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试突击-中间件篇">
 <meta property="og:url" content="http://yoursite.com/2019/08/26/面试突击-中间件篇/index.html">
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
-<meta property="og:description" content="MQ 如何保证消息幂等性避免生产者重发消息基于mq的本身特性，对每条消息，mq系统内部会生成一个inner-msg-id，全局唯一，与业务无关；当mq接收到消息时，会先根据该id判断消息是否重复发送，进而决定是否接收该消息。 避免消费者重复消费1、乐观锁，修改数据时，判断version值是否变化，变化的就直接丢弃消息。2、去重表，可以使用业务中有唯一属性的字段，也可以自己生成一个全局唯一id，每消">
+<meta property="og:description" content="为什么使用MQ （优缺点）优点1.解耦一个系统可能有abcd四个模块，a 模块是核心模块，bcd 都需要从 a 获取数据，那么就需要在 a 模块写3个接口给bcd传输数据，这样的话，不管是模块增减，还是数据有变，都需要在a模块修改代码，强耦合。此时 ，mq 可以解耦，a 把数据发送到mq，bcd 自行订阅消费即可。 2.异步一个接口可能调用多个模块的接口，耗时较大。通过 mq ，可以让各个模块自行">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-26T14:13:30.882Z">
+<meta property="og:updated_time" content="2020-03-03T16:12:46.314Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试突击-中间件篇">
-<meta name="twitter:description" content="MQ 如何保证消息幂等性避免生产者重发消息基于mq的本身特性，对每条消息，mq系统内部会生成一个inner-msg-id，全局唯一，与业务无关；当mq接收到消息时，会先根据该id判断消息是否重复发送，进而决定是否接收该消息。 避免消费者重复消费1、乐观锁，修改数据时，判断version值是否变化，变化的就直接丢弃消息。2、去重表，可以使用业务中有唯一属性的字段，也可以自己生成一个全局唯一id，每消">
+<meta name="twitter:description" content="为什么使用MQ （优缺点）优点1.解耦一个系统可能有abcd四个模块，a 模块是核心模块，bcd 都需要从 a 获取数据，那么就需要在 a 模块写3个接口给bcd传输数据，这样的话，不管是模块增减，还是数据有变，都需要在a模块修改代码，强耦合。此时 ，mq 可以解耦，a 把数据发送到mq，bcd 自行订阅消费即可。 2.异步一个接口可能调用多个模块的接口，耗时较大。通过 mq ，可以让各个模块自行">
 
 
 
@@ -464,7 +464,18 @@
       
 
       
-        <h1 id="MQ-如何保证消息幂等性"><a href="#MQ-如何保证消息幂等性" class="headerlink" title="MQ 如何保证消息幂等性"></a>MQ 如何保证消息幂等性</h1><h2 id="避免生产者重发消息"><a href="#避免生产者重发消息" class="headerlink" title="避免生产者重发消息"></a><strong>避免生产者重发消息</strong></h2><p>基于mq的本身特性，对每条消息，mq系统内部会生成一个inner-msg-id，全局唯一，与业务无关；当mq接收到消息时，会先根据该id判断消息是否重复发送，进而决定是否接收该消息。</p>
+        <h1 id="为什么使用MQ-（优缺点）"><a href="#为什么使用MQ-（优缺点）" class="headerlink" title="为什么使用MQ （优缺点）"></a>为什么使用MQ （优缺点）</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p><strong>1.解耦</strong><br>一个系统可能有abcd四个模块，a 模块是核心模块，bcd 都需要从 a 获取数据，那么就需要在 a 模块写3个接口给bcd传输数据，这样的话，不管是模块增减，还是数据有变，都需要在a模块修改代码，强耦合。此时 ，mq 可以解耦，a 把数据发送到mq，bcd 自行订阅消费即可。</p>
+<p><strong>2.异步</strong><br>一个接口可能调用多个模块的接口，耗时较大。通过 mq ，可以让各个模块自行在后台消费，该接口只需要执行完自己的操作即可返回结果。</p>
+<p><strong>3.削峰</strong><br>系统可能在某个时间点，有大量请求过来，可能会导致系统直接崩掉，而其他时间请求很少，此时就可以通过 mq 存储数据，在后台以每秒系统能够承受的压力去处理请求。</p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p><strong>1.可用性降低</strong><br>系统依赖mq之后，必须保证mq的高可用，因为mq如果挂了的话，系统可能就崩了。</p>
+<p><strong>2.复杂性提高</strong><br>系统依赖mq之后，需要考虑如何解决消息的重复消费、消息的丢失、保证顺序消费。</p>
+<p><strong>3.一致性</strong><br>系统依赖mq之后，如果 a 系统成功发送到mq消息，此时返回结果成功，但是bcd系统消费失败了，导致一致性没有保证。</p>
+<h1 id="MQ-如何保证高可用"><a href="#MQ-如何保证高可用" class="headerlink" title="MQ 如何保证高可用"></a>MQ 如何保证高可用</h1><h2 id="RabbitMq-高可用"><a href="#RabbitMq-高可用" class="headerlink" title="RabbitMq 高可用"></a>RabbitMq 高可用</h2><p><strong>1.普通集群</strong><br>有 a、b、c 三个节点，但是只有 b 节点的queue有元数据和实际数据，而 ac 节点只有queue的元数据，用户请求到ac时，那么ac需要从b节点获取实际数据，再返回给用户。只是提高了吞吐量。</p>
+<p>缺点：<br>1、3个节点内部传输消耗可能会过大<br>2、b 节点挂了，服务就不可用了</p>
+<p><strong>2.镜像集群</strong><br>有a、b、c 三个节点，它们都存有queue的元数据和实际数据。</p>
+<p>缺点：<br>不是分布式，如果数据过大，节点存不下的话，不好处理。</p>
+<h2 id="Kafka-高可用"><a href="#Kafka-高可用" class="headerlink" title="Kafka 高可用"></a>Kafka 高可用</h2><p>kafka 是分布式的，它的数据是分批存在多个节点的，每个节点存一部分数据，每个节点还可以有自己的副本节点，主节点用来写数据，同步到副本，当一个主节点挂了之后，kafka会把它相应的副本节点提升为主节点，继续工作。</p>
+<h1 id="MQ-如何保证消息幂等性"><a href="#MQ-如何保证消息幂等性" class="headerlink" title="MQ 如何保证消息幂等性"></a>MQ 如何保证消息幂等性</h1><h2 id="避免生产者重发消息"><a href="#避免生产者重发消息" class="headerlink" title="避免生产者重发消息"></a><strong>避免生产者重发消息</strong></h2><p>基于mq的本身特性，对每条消息，mq系统内部会生成一个inner-msg-id，全局唯一，与业务无关；当mq接收到消息时，会先根据该id判断消息是否重复发送，进而决定是否接收该消息。</p>
 <h2 id="避免消费者重复消费"><a href="#避免消费者重复消费" class="headerlink" title="避免消费者重复消费"></a><strong>避免消费者重复消费</strong></h2><p>1、乐观锁，修改数据时，判断version值是否变化，变化的就直接丢弃消息。<br>2、去重表，可以使用业务中有唯一属性的字段，也可以自己生成一个全局唯一id，每消费一个消息，将其唯一属性存入redis，下次消费消息时，先查redis里面是否有此数据，有的话就直接丢弃消息。</p>
 <a id="more"></a>
 
@@ -596,7 +607,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -734,7 +745,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-如何保证消息幂等性"><span class="nav-number">1.</span> <span class="nav-text">MQ 如何保证消息幂等性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#避免生产者重发消息"><span class="nav-number">1.1.</span> <span class="nav-text">避免生产者重发消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免消费者重复消费"><span class="nav-number">1.2.</span> <span class="nav-text">避免消费者重复消费</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么使用MQ-（优缺点）"><span class="nav-number">1.</span> <span class="nav-text">为什么使用MQ （优缺点）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-如何保证高可用"><span class="nav-number">2.</span> <span class="nav-text">MQ 如何保证高可用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMq-高可用"><span class="nav-number">2.1.</span> <span class="nav-text">RabbitMq 高可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-高可用"><span class="nav-number">2.2.</span> <span class="nav-text">Kafka 高可用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-如何保证消息幂等性"><span class="nav-number">3.</span> <span class="nav-text">MQ 如何保证消息幂等性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#避免生产者重发消息"><span class="nav-number">3.1.</span> <span class="nav-text">避免生产者重发消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免消费者重复消费"><span class="nav-number">3.2.</span> <span class="nav-text">避免消费者重复消费</span></a></li></ol></li></ol></div>
             
 
           </div>
