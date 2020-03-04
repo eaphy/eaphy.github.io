@@ -94,15 +94,18 @@
 
 
 
-  <meta name="keywords" content="面试">
+  <meta name="description" content="MQ 踩坑坑一、消费者宕机，消息积压百万挖坑： 实际项目中有发生过消费者挂掉，导致mq积压了上百万的消息。 填坑： 首先向公司申请了一批机器，构建了一个多倍于原有队列的mq，并且为他们设定了各自的消费者，然后临时修改原有的宕机消费者代码，使其接收到消息后不再消费，而是直接发到新建的mq中，然后重启恢复挂掉的消费者，让新建的mq的消费者去快速消费。消费完毕后，撤掉新建的mq，恢复原有代码，填坑完毕。">
+<meta name="keywords" content="面试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="面试突击-架构篇">
-<meta property="og:url" content="http://yoursite.com/2019/08/26/面试突击-架构篇/index.html">
+<meta property="og:title" content="项目踩坑">
+<meta property="og:url" content="http://yoursite.com/2020/03/04/项目踩坑/index.html">
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
+<meta property="og:description" content="MQ 踩坑坑一、消费者宕机，消息积压百万挖坑： 实际项目中有发生过消费者挂掉，导致mq积压了上百万的消息。 填坑： 首先向公司申请了一批机器，构建了一个多倍于原有队列的mq，并且为他们设定了各自的消费者，然后临时修改原有的宕机消费者代码，使其接收到消息后不再消费，而是直接发到新建的mq中，然后重启恢复挂掉的消费者，让新建的mq的消费者去快速消费。消费完毕后，撤掉新建的mq，恢复原有代码，填坑完毕。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-26T14:11:50.313Z">
+<meta property="og:updated_time" content="2020-03-04T15:37:06.825Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="面试突击-架构篇">
+<meta name="twitter:title" content="项目踩坑">
+<meta name="twitter:description" content="MQ 踩坑坑一、消费者宕机，消息积压百万挖坑： 实际项目中有发生过消费者挂掉，导致mq积压了上百万的消息。 填坑： 首先向公司申请了一批机器，构建了一个多倍于原有队列的mq，并且为他们设定了各自的消费者，然后临时修改原有的宕机消费者代码，使其接收到消息后不再消费，而是直接发到新建的mq中，然后重启恢复挂掉的消费者，让新建的mq的消费者去快速消费。消费完毕后，撤掉新建的mq，恢复原有代码，填坑完毕。">
 
 
 
@@ -110,7 +113,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/08/26/面试突击-架构篇/">
+  <link rel="canonical" href="http://yoursite.com/2020/03/04/项目踩坑/">
 
 
 
@@ -120,7 +123,7 @@
   };
 </script>
 
-  <title>面试突击-架构篇 | Eaphy's Blog</title>
+  <title>项目踩坑 | Eaphy's Blog</title>
   
 
 
@@ -364,7 +367,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/26/面试突击-架构篇/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/04/项目踩坑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EAPHY">
@@ -381,7 +384,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">面试突击-架构篇
+          <h1 class="post-title" itemprop="name headline">项目踩坑
 
               
             
@@ -408,7 +411,7 @@
                 
               
 
-              <time title="创建时间：2019-08-26 22:10:31" itemprop="dateCreated datePublished" datetime="2019-08-26T22:10:31+08:00">2019-08-26</time>
+              <time title="创建时间：2020-03-04 23:07:30" itemprop="dateCreated datePublished" datetime="2020-03-04T23:07:30+08:00">2020-03-04</time>
             
 
             
@@ -461,7 +464,11 @@
       
 
       
-        <a id="more"></a>
+        <h1 id="MQ-踩坑"><a href="#MQ-踩坑" class="headerlink" title="MQ 踩坑"></a>MQ 踩坑</h1><h2 id="坑一、消费者宕机，消息积压百万"><a href="#坑一、消费者宕机，消息积压百万" class="headerlink" title="坑一、消费者宕机，消息积压百万"></a>坑一、消费者宕机，消息积压百万</h2><p><strong>挖坑：</strong> 实际项目中有发生过消费者挂掉，导致mq积压了上百万的消息。</p>
+<p><strong>填坑：</strong> 首先向公司申请了一批机器，构建了一个多倍于原有队列的mq，并且为他们设定了各自的消费者，然后临时修改原有的宕机消费者代码，使其接收到消息后不再消费，而是直接发到新建的mq中，然后重启恢复挂掉的消费者，让新建的mq的消费者去快速消费。消费完毕后，撤掉新建的mq，恢复原有代码，填坑完毕。</p>
+<h2 id="坑二、未按照预期顺序消费"><a href="#坑二、未按照预期顺序消费" class="headerlink" title="坑二、未按照预期顺序消费"></a>坑二、未按照预期顺序消费</h2><p><strong>挖坑：</strong> 实际项目中有两台消费者，它们消费同一个mq，但是mq中只有一个队列，发生过本来对同一个数据的两个操作消息a、消息b，分别被两台消费者各消费了一个，但是呢，恰好本来应在消息a之后的消息b却被先消费掉了，导致数据库中产生的数据与预期的不一致。</p>
+<p><strong>填坑：</strong> 首先在mq中多加了一个队列，使每个队列对应一个消费者，然后在代码中实现了将同类型的（如同一个 id ）业务数据hash到同一个队列中，这样保证了每个队列中的相同消息顺序被同一个消费者消费，填坑完毕。</p>
+<a id="more"></a>
       
     </div>
 
@@ -500,8 +507,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/26/面试突击-算法篇/" rel="next" title="面试突击-算法篇">
-                <i class="fa fa-chevron-left"></i> 面试突击-算法篇
+              <a href="/2020/02/27/JUC-解析/" rel="next" title="JUC 解析">
+                <i class="fa fa-chevron-left"></i> JUC 解析
               </a>
             
           </div>
@@ -509,10 +516,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/01/Elasticsearch-解析/" rel="prev" title="Elasticsearch 解析">
-                Elasticsearch 解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -560,8 +563,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -705,6 +717,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-踩坑"><span class="nav-number">1.</span> <span class="nav-text">MQ 踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坑一、消费者宕机，消息积压百万"><span class="nav-number">1.1.</span> <span class="nav-text">坑一、消费者宕机，消息积压百万</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑二、未按照预期顺序消费"><span class="nav-number">1.2.</span> <span class="nav-text">坑二、未按照预期顺序消费</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
