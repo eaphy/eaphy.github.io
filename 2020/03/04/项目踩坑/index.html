@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
 <meta property="og:description" content="MQ 踩坑坑一、消费者宕机，消息积压百万挖坑： 实际项目中有发生过消费者挂掉，导致mq积压了上百万的消息。 填坑： 首先向公司申请了一批机器，构建了一个多倍于原有队列的mq，并且为他们设定了各自的消费者，然后临时修改原有的宕机消费者代码，使其接收到消息后不再消费，而是直接发到新建的mq中，然后重启恢复挂掉的消费者，让新建的mq的消费者去快速消费。消费完毕后，撤掉新建的mq，恢复原有代码，填坑完毕。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-29T10:57:13.483Z">
+<meta property="og:updated_time" content="2020-04-05T06:58:30.946Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目踩坑">
 <meta name="twitter:description" content="MQ 踩坑坑一、消费者宕机，消息积压百万挖坑： 实际项目中有发生过消费者挂掉，导致mq积压了上百万的消息。 填坑： 首先向公司申请了一批机器，构建了一个多倍于原有队列的mq，并且为他们设定了各自的消费者，然后临时修改原有的宕机消费者代码，使其接收到消息后不再消费，而是直接发到新建的mq中，然后重启恢复挂掉的消费者，让新建的mq的消费者去快速消费。消费完毕后，撤掉新建的mq，恢复原有代码，填坑完毕。">
@@ -477,6 +477,10 @@
 <h1 id="JVM-踩坑"><a href="#JVM-踩坑" class="headerlink" title="JVM 踩坑"></a>JVM 踩坑</h1><h2 id="坑一、堆内存-OOM，java-heap-space"><a href="#坑一、堆内存-OOM，java-heap-space" class="headerlink" title="坑一、堆内存 OOM，java heap space"></a>坑一、堆内存 OOM，java heap space</h2><p><strong>挖坑：</strong> 在项目中，我们对于一些数据的查询必须是带过滤条件的，比如集团id和机构id，而这些属性通过拦截器都封装在线程变量里，当某位同学做业务查询时，开启了异步线程，导致了从线程变量里获取到的数据为空，过滤条件未生效，一次查询加载了差不多几十万的数据出来，直接导致 OOM</p>
 <p><strong>填坑：</strong>  通过MAT工具分析了dump文件，找到了占用内存最多的那个线程，发现该线程的一个方法创建了一万多的对象，通过本地实践验证，发现是过滤条件失效的问题引发，修改之后，恢复正常。</p>
 <p>顺便说一下，栈内存溢出，一般是方法递归调用产生，metaspace 内存溢出，一般是无限制的动态生成类产生。</p>
+<h2 id="坑二、服务周期性卡顿"><a href="#坑二、服务周期性卡顿" class="headerlink" title="坑二、服务周期性卡顿"></a>坑二、服务周期性卡顿</h2><p>实际项目运行高峰期出现过，每隔十几分钟出现服务卡顿几秒的现象。</p>
+<p>线上jvm配置：<br>4核8G,  分配给jvm 4g，新生代1.5G（1.2G:150m:150m），老年代1.5G，永久代500m,栈1m(一般几百个线程，也就是几百兆)</p>
+<p>我们的医疗系统，目前是有几十家医院在使用，高峰期的qps在1000左右，目前是部署了两台机器在运行，基本上也就是每台机器高峰期qps也就500左右，我所在的供应链模块，基本上一个对象平均在500字节，按照一个请求平均创建20个对象，差不多每秒产生的对象占用的堆内存在500* 500* 20=10m, 一分钟 60*10=600m, 4 分钟 就会触发ygc，由于部分接口比较耗时，观察发现会有180兆的对象没有被回收，此时，servior区只有150兆，已经放不下这180m的对象了，就会直接进入老年代，这样的话，差不多16分钟就会发生fullgc，这样对性能是有很大影响的。</p>
+<p>优化过程：<br>如果直接增大新生代的大小为2G（1.6G:200m:200m），老年代减为1G，这样的确可以保证servior能够放下每次ygc没回收的180m对象，但是，由于jvm垃圾回收的动态年龄规划，只要超过servior的一半内存，还是会把部分对象直接移入老年代，在某个时刻还是会触发fullgc，最终我们决定把新生代的比例改为6，即（1.2G:400m:400m）,这样每次ygc剩下的180m对象刚好不够400m的一半，不足于触发动态年龄规划，也就不会有对象进入老年代。我们调优的原则就是把gc都发生在年轻代，尽量不发生或少发生fullgc。</p>
 
       
     </div>
@@ -745,7 +749,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-踩坑"><span class="nav-number">1.</span> <span class="nav-text">MQ 踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坑一、消费者宕机，消息积压百万"><span class="nav-number">1.1.</span> <span class="nav-text">坑一、消费者宕机，消息积压百万</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑二、未按照预期顺序消费"><span class="nav-number">1.2.</span> <span class="nav-text">坑二、未按照预期顺序消费</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑三、消息重复消费"><span class="nav-number">1.3.</span> <span class="nav-text">坑三、消息重复消费</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-踩坑"><span class="nav-number">2.</span> <span class="nav-text">Redis 踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坑一、rdb-数据恢复，总是恢复失败"><span class="nav-number">2.1.</span> <span class="nav-text">坑一、rdb 数据恢复，总是恢复失败</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM-踩坑"><span class="nav-number">3.</span> <span class="nav-text">JVM 踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坑一、堆内存-OOM，java-heap-space"><span class="nav-number">3.1.</span> <span class="nav-text">坑一、堆内存 OOM，java heap space</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-踩坑"><span class="nav-number">1.</span> <span class="nav-text">MQ 踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坑一、消费者宕机，消息积压百万"><span class="nav-number">1.1.</span> <span class="nav-text">坑一、消费者宕机，消息积压百万</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑二、未按照预期顺序消费"><span class="nav-number">1.2.</span> <span class="nav-text">坑二、未按照预期顺序消费</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑三、消息重复消费"><span class="nav-number">1.3.</span> <span class="nav-text">坑三、消息重复消费</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-踩坑"><span class="nav-number">2.</span> <span class="nav-text">Redis 踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坑一、rdb-数据恢复，总是恢复失败"><span class="nav-number">2.1.</span> <span class="nav-text">坑一、rdb 数据恢复，总是恢复失败</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM-踩坑"><span class="nav-number">3.</span> <span class="nav-text">JVM 踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坑一、堆内存-OOM，java-heap-space"><span class="nav-number">3.1.</span> <span class="nav-text">坑一、堆内存 OOM，java heap space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑二、服务周期性卡顿"><span class="nav-number">3.2.</span> <span class="nav-text">坑二、服务周期性卡顿</span></a></li></ol></li></ol></div>
             
 
           </div>
