@@ -102,10 +102,12 @@
 <meta property="og:site_name" content="Eaphy&#39;s Blog">
 <meta property="og:description" content="为什么使用MQ （优缺点）优点1.解耦一个系统可能有abcd四个模块，a 模块是核心模块，bcd 都需要从 a 获取数据，那么就需要在 a 模块写3个接口给bcd传输数据，这样的话，不管是模块增减，还是数据有变，都需要在a模块修改代码，强耦合。此时 ，mq 可以解耦，a 把数据发送到mq，bcd 自行订阅消费即可。 2.异步一个接口可能调用多个模块的接口，耗时较大。通过 mq ，可以让各个模块自行">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-04T15:05:09.074Z">
+<meta property="og:image" content="http://yoursite.com/img/loading.gif">
+<meta property="og:updated_time" content="2020-04-15T16:37:22.019Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试突击-中间件篇">
 <meta name="twitter:description" content="为什么使用MQ （优缺点）优点1.解耦一个系统可能有abcd四个模块，a 模块是核心模块，bcd 都需要从 a 获取数据，那么就需要在 a 模块写3个接口给bcd传输数据，这样的话，不管是模块增减，还是数据有变，都需要在a模块修改代码，强耦合。此时 ，mq 可以解耦，a 把数据发送到mq，bcd 自行订阅消费即可。 2.异步一个接口可能调用多个模块的接口，耗时较大。通过 mq ，可以让各个模块自行">
+<meta name="twitter:image" content="http://yoursite.com/img/loading.gif">
 
 
 
@@ -481,6 +483,11 @@
 <h2 id="避免消费者重复消费"><a href="#避免消费者重复消费" class="headerlink" title="避免消费者重复消费"></a><strong>避免消费者重复消费</strong></h2><p>1、乐观锁，修改数据时，判断version值是否变化，变化的就直接丢弃消息。<br>2、去重表，可以使用业务中有唯一属性的字段，也可以自己生成一个全局唯一id，每消费一个消息，将其唯一属性存入redis，下次消费消息时，先查redis里面是否有此数据，有的话就直接丢弃消息。</p>
 <h1 id="MQ-如何保证消息顺序消费"><a href="#MQ-如何保证消息顺序消费" class="headerlink" title="MQ 如何保证消息顺序消费"></a>MQ 如何保证消息顺序消费</h1><h2 id="RabbitMq"><a href="#RabbitMq" class="headerlink" title="RabbitMq"></a>RabbitMq</h2><p>当一个mq有多个消费者时，会产生消费者消费信息顺序错乱的情况。<br>可以通过设置多个queue，每个queue只对应一个消费者，根据业务中的字段，将相同类型的数据hash到同一个queue里，这样就保证了每个消费者消费的消息是按照我们预期的顺序执行。</p>
 <h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><p>kafka 的消息写入一个partition是一定有序的，同时一个 partition 只能被一个消费者消费。但是一个消费者读取消息时，可能会开启多个线程消费，毕竟单线程消费的能力有限，这就可能导致信息消费的顺序错乱。<br>可以通过为每个 partition 开启多个内存队列，将相同类型的数据hash到同一个内存队列里，每个线程消费其中的一个内存队列，这样就保证了每个消费者消费的消息是按照我们预期的顺序执行。</p>
+<h1 id="MQ-如何保证消息100-投递成功"><a href="#MQ-如何保证消息100-投递成功" class="headerlink" title="MQ 如何保证消息100%投递成功"></a>MQ 如何保证消息100%投递成功</h1><h2 id="消息落库，对消息状态打标"><a href="#消息落库，对消息状态打标" class="headerlink" title="消息落库，对消息状态打标"></a>消息落库，对消息状态打标</h2><p>在发送消息前，先把消息存入数据库，状态为 0 ，表示已投递待确认，通过消息的监听，收到消息投递成功返回的确认时，更改数据库状态为1，表示投递成功。当然，这中间会有一个定时任务，定时查询库中超过一定时间的状态还不是1的消息，把它重新发送。</p>
+<h2 id="消息的延迟投递，做二次确认，回调检查"><a href="#消息的延迟投递，做二次确认，回调检查" class="headerlink" title="消息的延迟投递，做二次确认，回调检查"></a>消息的延迟投递，做二次确认，回调检查</h2><p>发送消息时，先发送一次消息到mq，再发送同样的延时消息到mq，这两个消息发送的队列是不一样的， 第一个是真正的消费者接受消息的队列，第二个延迟消息发送给一个专用的消息补偿服务接受消息的队列。当真正的消费者消费了消息时，也会发送一个消息到专用的消息补偿服务接受消息的队列，表明自己已经成功接收处理了该消息。此时，专用的消息补偿服务就把该消息落库。当时间超过延迟消息的延迟时间时，这时专用的消息补偿服务会接收到那条延迟消息，然后查库，发现确实没有这条消息，那就说明消息没有成功被消费，这时专用的消息补偿服务会再次从头走一遍上述过程。</p>
+<img src="/img/loading.gif" data-original="/img/20041501.png" align="center/">
+
+
 <hr>
 <p><font color="red"> 未完待续…… </font></p>
 
@@ -713,7 +720,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">24</span>
+                      
+                    
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -751,7 +760,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么使用MQ-（优缺点）"><span class="nav-number">1.</span> <span class="nav-text">为什么使用MQ （优缺点）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-如何保证高可用"><span class="nav-number">2.</span> <span class="nav-text">MQ 如何保证高可用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMq-高可用"><span class="nav-number">2.1.</span> <span class="nav-text">RabbitMq 高可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-高可用"><span class="nav-number">2.2.</span> <span class="nav-text">Kafka 高可用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-如何保证消息幂等性"><span class="nav-number">3.</span> <span class="nav-text">MQ 如何保证消息幂等性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#避免生产者重发消息"><span class="nav-number">3.1.</span> <span class="nav-text">避免生产者重发消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免消费者重复消费"><span class="nav-number">3.2.</span> <span class="nav-text">避免消费者重复消费</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-如何保证消息顺序消费"><span class="nav-number">4.</span> <span class="nav-text">MQ 如何保证消息顺序消费</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMq"><span class="nav-number">4.1.</span> <span class="nav-text">RabbitMq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka"><span class="nav-number">4.2.</span> <span class="nav-text">Kafka</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么使用MQ-（优缺点）"><span class="nav-number">1.</span> <span class="nav-text">为什么使用MQ （优缺点）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-如何保证高可用"><span class="nav-number">2.</span> <span class="nav-text">MQ 如何保证高可用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMq-高可用"><span class="nav-number">2.1.</span> <span class="nav-text">RabbitMq 高可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-高可用"><span class="nav-number">2.2.</span> <span class="nav-text">Kafka 高可用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-如何保证消息幂等性"><span class="nav-number">3.</span> <span class="nav-text">MQ 如何保证消息幂等性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#避免生产者重发消息"><span class="nav-number">3.1.</span> <span class="nav-text">避免生产者重发消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免消费者重复消费"><span class="nav-number">3.2.</span> <span class="nav-text">避免消费者重复消费</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-如何保证消息顺序消费"><span class="nav-number">4.</span> <span class="nav-text">MQ 如何保证消息顺序消费</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMq"><span class="nav-number">4.1.</span> <span class="nav-text">RabbitMq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka"><span class="nav-number">4.2.</span> <span class="nav-text">Kafka</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ-如何保证消息100-投递成功"><span class="nav-number">5.</span> <span class="nav-text">MQ 如何保证消息100%投递成功</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#消息落库，对消息状态打标"><span class="nav-number">5.1.</span> <span class="nav-text">消息落库，对消息状态打标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息的延迟投递，做二次确认，回调检查"><span class="nav-number">5.2.</span> <span class="nav-text">消息的延迟投递，做二次确认，回调检查</span></a></li></ol></li></ol></div>
             
 
           </div>
