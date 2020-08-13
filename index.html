@@ -798,8 +798,7 @@
 
       
         
-          <h1 id="MQ-踩坑"><a href="#MQ-踩坑" class="headerlink" title="MQ 踩坑"></a>MQ 踩坑</h1><h2 id="坑一、消费者宕机，消息积压百万"><a href="#坑一、消费者宕机，消息积压百万" class="headerlink" title="坑一、消费者宕机，消息积压百万"></a>坑一、消费者宕机，消息积压百万</h2><p><strong>挖坑：</strong> 实际项目中有发生过消费者挂掉，导致mq积压了上百万的消息。</p>
-<p><strong>填坑：</strong> 首先向公司申请了一批机器，构建了一个多倍于原有队列的mq，并且为他们设定了各自的消费者，然后临时修改原有的宕机消费者代码，使其接收到消息后不再消费，而是直接发到新建的mq中，然后重启恢复挂掉的消费者，让新建的mq的消费者去快速消费。消费完毕后，撤掉新建的mq，恢复原有代码，填坑完毕。</p>
+          <font color="red">ʅ（´◔౪◔）ʃ &nbsp&nbsp&nbsp  文章已加密，有缘自会相见 ！！！</font>
           <!--noindex-->
           
             <div class="post-button text-center">
