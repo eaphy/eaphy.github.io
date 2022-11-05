@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[搭建KMS服务器]]></title>
+    <url>%2F2022%2F11%2F05%2F%E6%90%AD%E5%BB%BAKMS%E6%9C%8D%E5%8A%A1%E5%99%A8%2F</url>
+    <content type="text"><![CDATA[由于习惯了使用 office 套件，迫于每次安装都需要为寻找激活方法而浪费时间，所以需要搭建一套KMS激活服务。 准备工作 宿主机：MacBook Pro 14 （M1 pro) 虚拟机：Parallels Desktop 18.1.0 服务器：CentOS 9 资源下载CentOS 9 下载地址：http://mirror.stream.centos.org/9-stream/BaseOS/aarch64/iso/ 选择 CentOS-Stream-9-20221101.0-aarch64-boot.iso 下载，通过 Parallels Desktop 选择最小安装完成即可。 服务安装一键安装，开源地址：https://github.com/dakkidaze/one-key-kms 1234567891011# 安装 wgetyum install wget# 下载并运行安装脚本，回复 y 确认安装，等待安装完毕wget https://raw.githubusercontent.com/dakkidaze/one-key-kms/master/one-key-kms-centos.sh &amp;&amp; chmod +x one-key-kms-centos.sh &amp;&amp;./one-key-kms-centos.sh# 下载运行脚本wget https://raw.githubusercontent.com/dakkidaze/one-key-kms/master/kms.sh &amp;&amp; chmod +x kms.sh# 操作 KMSsh kms.sh start | stop | restart | status 开放端口1234# 开放1688端口firewall-cmd --zone=public --add-port=1688/tcp --permanent# 刷新防火墙firewall-cmd --reload 激活产品12345678# 在Windows中激活Office，以管理员身份运行CMD，执行下列脚本if exist "%ProgramFiles%\Microsoft Office\Office16\ospp.vbs" cd /d "%ProgramFiles%\Microsoft Office\Office16"if exist "%ProgramFiles(x86)%\Microsoft Office\Office16\ospp.vbs" cd /d "%ProgramFiles(x86)%\Microsoft Office\Office16"cscript ospp.vbs /inpkey:NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKPcscript ospp.vbs /sethst:192.168.0.104 # 这里为自己服务器IPcscript ospp.vbs /actcscript ospp.vbs /dstatus]]></content>
+      <categories>
+        <category>网站运维</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>kms</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo 博客迁移]]></title>
     <url>%2F2022%2F09%2F12%2FHexo-%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%2F</url>
     <content type="text"><![CDATA[最近新入手 Macbook Pro，使用了6年的 windows 电脑将逐渐被替换，因此需要将老电脑中的Hexo博客迁移至新电脑。由于习惯了目前的Next主题样式，不想更换到最新版，特需要将现在的所有环境版本同步到我的 Parallels Desktop 中的windows11中。 1、安装 node.js 12.0.0 版本 1https://nodejs.org/download/release/v12.0.0/ 2、安装 git，配置环境变量，设置邮箱用户名 123git config --global user.name "eaphy"git config --global user.email "up_eaphy@foxmail.com" 3、安装 hexo-cli 2.0.0 版本 1npm install hexo-cli@2.0.0 -g 4、初始化博客根目录文件夹 1hexo init MyBlog 5、将已打包好的老文件夹里面所有文件粘贴到新文件夹，除git相关的文件夹除外 6、逐一执行清理、打包运行、推送等脚本]]></content>
@@ -189,7 +201,7 @@
   <entry>
     <title><![CDATA[魔镜心灵]]></title>
     <url>%2F2019%2F06%2F29%2F%E9%AD%94%E9%95%9C%E5%BF%83%E7%81%B5%2F</url>
-    <content type="text"><![CDATA[执意要看，请输入暗号 ！ Incorrect Password! No content to display! U2FsdGVkX19AvoJ5QQBHAEs0NUQaI7AgjL0KyHszEi0sO2dRTjIHHgqtghBmuFKTyCqeh4ZNdfKDvv4gKH+oZywGwIMBxQwh4TBffycPwlW0JDmrdFcOv5MuGiTNz46qcp78yfSaubMoxzbLKbCSXdcr3Jgd4D47NEfkOAawjgSpeTu6TRp+uqRW4c4V+5fLl289W2BbouNhs19NYHRca70sSUSEgiuAoxajIXVgY6lRHN4rjjIHoxfWv5eXgV7KXoZmpAt4zshj4DBzLWFmJoTUnO53pWiYwbS1HmYtb+7Lct48wl1W5zlBOuxTbhd3fqZg7mpG5HRr4zfKzvVhVu+ipsuDwX4dLOk+V/RYoKbWHPwR4GERTXJQGPqXHiLHI05M7hDWRJaDLnGsTqdLYiiB1S9G+s4eFBklKTvHejMseqj9tcQMJtr2nhd3tpT1sRVJp5Wmd2g3vItBmObLn9OY8rfBwV6Wcq2pUxw5aZ6tsw1c0mV9ZkL0B9U9snxrHCP45GNqNXZT3Ay9J7cSpbLM5aP9Mzgg5eQvKYT2kaATtAn6DQI00AmqiPB+Y7WvSc8GBzxQC2NmuWeAqezJCxMrP3ub3Us4rzJX0OiabqUillUlQB4oATBLAohf+r+G9VZekyAOTW39MApue8yunecJAr9QhzfCG3SAyLZYhFSxNL229AJEelU/41tNieJ42RMwuwBqkZQRes3iNSL+Q46r4e5hUpvoPBozElv9XIwN1p5TLmKO6BmePS4z3OApm0b5ovS8YzDXPtGSfIv3Fl4KbfcUTHimW4aE4HzXkPs0ol4iZNV5clhQeKMZaxaer1SqJrF9LOg7c8my1yqXjjYBAyoDg//8FX9GxHIbIIip2cEoR7QI43j2SvOnmdiBNefChHdjTcxyxxqFDj1NsnLTi+NPf70bly4E9A9JxzYo2/1o7+grdQTiXxamkSTaBiKtKalKZGmiPkltV5N3hoHlaTEUzVOqppJvz48KOmqII1I2pCAIxeAlqdMbHJLfBaDRMoEkjvHnQ1Paxdpb9VES/b90OndpkZL7asWuePoJvWlcRu6FsXrs/C5gPTNQ5oBy94Ipc8l9SZzU3/vs0QyJFfFG0cQcxj3xt0/lNDsIg/8yI+Wu+/W4bCzYCcXaXEQFSEvl0X9DkWXBU8xWR6NQzMo4xlDHzsXdric/sfC8AWO/TqcwmB0Y24D6KF18dP8uZSlFPlXa1Ca4RlH5Dlu1nexdTKX310/UyYvTfzPI1EYC2Toi+P4Buf8vXKZftik86k9CFbLZmykGXD0CAwqwiCk3hLhA3JG6SwDYCHVVAK8i2DFIdKc1v/5URkqcz7Q5WLWXyQLvFYCvbBng7r6A/pJOMklIcNfJEKKZN/K+RtVOQg1+nK/2xoPVlEXy0KOwczerRqP8B/+6amQZKZ11Ly1/cWFCjYJ5BhYwzsQ9V0848Dn50nBotl246iqJoMs7yIzLb8JSzbZ1LTdk8J/sxh7VZLWftEG36SR1KhDWhqsanEZHWAL4MOqzNXSwtQIFUL57J3PKEgAdIpaN4BaigqcznEBKkbyLRSOY0yNpmg9RBAV5Ar3ICDH8F9xwlAdoKyi8Bjxm18t7LQTtCsvFSmU7VTy26SBBQGKK1YCHSVwganoXFNpgHRRyZr8uwfglKm/3ngb6AIz9ciDsS+YkBTkCD0A+dm4ZmjMHPDF+tk5RF5aFLTw6hdWAq4j6VYTAtH5SaS01hGG/RL1xXDj9u1fq6FSPDfG8ePHHHLpJoIkjvHykfNFsTofXiMrKFeMrRKZLdvZKMFrvMTyn3pUDSH6KDtY9uADL89AVZMYqJSGiFl03GzN/wTwfIVP4zJIQ8vcSebgnGcxpsbBZEDJzlyutBTkEJb0dZT/z+baDu3tRJvWNhTjFowwxknaMl9V4Y33dHOlQwLlNFVOvUxykAPBUw6JRPriP0M2xE1SzaCD9Q/MHRPpCCebtUIgm]]></content>
+    <content type="text"><![CDATA[执意要看，请输入暗号 ！ Incorrect Password! No content to display! U2FsdGVkX1/UYrXTMCzhpIFTp1cQSvHscTfS/DC5JnUFLu2lwhZ4OBkA8lapUQRovkwzJAugKLecAgaDkorcK3Rg8tiK0ofKvi2XrzrB5aH3mKEMZD86ZgEfkyiGX92egvVCIASWj1660qKCbuf7CllcIzOmid1KrEFIYrEOEyiDZGcDeOydYPXWA692t8eRAOAWEqVicxRWzSUQtgjBkd3w68/UOedT3qB5VYHLkbNYKtuCzCx7ajyzmYuTB4lE10J5q77O7dVEqOjedGT9KXeFU98zhWcAepmPeKUtpJypOCf2bySphYBk56/ra8eJzyaiF6QnhTadAnqUC8gh5b/EffZ9MD3rLvy6rIlqhLwdxwuvcGCLWSPXQdh/4W58BXcFwsqgRMtW+F8aCTWwLhzwjxwPvOHiNWby8fp2kSSD2ggz43JeuoukGDFevoeQOE/GlajLKy20aTVJe8JX6i+GCVC4ixN6/+K9rRczFpndAb1TIr7RHWglodU9sNm77cptWJ6nb5wloKJejiMVGs5s+QR1VsPLTr0H/hI5s5MM2CWLdsT970a8ee9tDtOPJP9mZm6q/CQ6tvAg0r/uq8otSJEKDXVe5N0eGfj40WkL0njoKXMC5umwJKdWc3qugMR1LGKo1ByP+0eHK0RZnmpCNpkCTNpfiwPWaGFjQkmEotGQiBecH7tSX1X1Zi+u/KHeW7VB5/lZsmT6LDZgZ9Ye6uPQ8Vh9nkZGjVQsM1dRjCPKqzQxGIEKlskECBw0BhgjvkNvlkx6E4oQuazRr2qj51Uvkm3U+ypwfwuED3jw09DcQmUCwRZZdYDdFQ8XMghOgUZX8ShVUiHlSA71GalcqhlQFE16a921JQ0v5c4er2B4tlIKY01bimI8FigtAIldQ4K9sogwPTuuQlHeaiSRgEXRhxDCGauTkjSJdOmensTgzJILkKcPlCPeM41e1Wai1hUIIWPb+g/xExOenLgy+K9VJS2tH1nZrIl9AxRj6l4HmFWE1pK14DJXPVM6/KmzfFILx00/zc6Uy9x9ZzJ1w5LxLqeopXChI7SZKvj/YTlLey9VkUQPZYQswgdQ4EIwy930Csa0BxR4gDYrzrTJ35hBDpux9xWU08IiJNgbFTvcsAYnZ/PvlOdYXNKICcbn2PaP33YwDljRM1MB9A0ghZppW9Dfm3gCfMyOsc/E0ks21jzfLF/sj84T+3xOBz4lDK4rR+Q97jiQ/CbblGq7Ml7m4A/H4uk3jDwgKvKr7iv/VgsJQab3Eru/mcu/VS1ympxYMmEY32YXk8mqL+lCuX06tEAaKeEvdcLqP0SXA7oRpknM6uXBvUZTSyJWtds/m/SraODtAyaVJPc9WoTh46Tzbh07J7r9ZnrW4DL+6yIrb+jt4/pcoM50BJXkTqJc3kotnDIvb2Z+/kkS8tJCWZnE2Jdzwa7Lo4GQt82HjpoSAdi5gJf4oQ2vmUutS48U6MhNTzhmlTamWdpGVKWjSIpor6yzxqkrudBpvD1jvF4WQCj7u4dqen6WQcdZlpR5xiV8zhjIqcqfMjNLYW5S2fOBNeUHqmNuOSYfug6IMBGQLJx3SxngH3yTF2dJqVbQVrLtmQiXqr+dLnqGBj/ZFbKRvMLi7Lpln0wYJyRt0eN+/xdl0e7JoQio7JljFTdnqoB+Y02UxnvLc+/9W9vhZkS9nOFeiiTuffBwshHWq7LYHrjcNkdYbDgXDjmlWirbI/P3TAemqkzjv+8QcFG3pp0qIxkItWPObNM0wS86A+6OqyFjRZft8cctkQAYFKvahFn4/3vHmXdfns3JxqHt6Onp18hENaGncYaPcqFVuggD/GzKmaBjst6/0ZjjFmeCxokZ1mQr+T6x8h01BonMXwgWiddtuJSh0qdgZHfE/1/JZbVN8C/ohOwsmGyNC+uEEzg9DiGb8yRm8eOZME2Djx7b+8Qa2XMVfR9GyvHej2Q/FOFcD00Zx4xBRsO0]]></content>
       <categories>
         <category>生活随笔</category>
       </categories>
@@ -227,8 +239,8 @@
         <category>java</category>
       </categories>
       <tags>
-        <tag>线程池</tag>
         <tag>java</tag>
+        <tag>线程池</tag>
       </tags>
   </entry>
   <entry>
